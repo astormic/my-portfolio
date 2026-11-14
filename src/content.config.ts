@@ -6,7 +6,7 @@ import { z } from 'astro/zod';
 // For a project the body is its description; for a publication, its abstract.
 const research = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/research' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     // Used for ordering (newest first). Publications show the year only.
     date: z.coerce.date(),
@@ -28,6 +28,8 @@ const research = defineCollection({
     // A file in public/ (e.g. /papers/my-paper.pdf) or a full URL.
     pdf: z.string().optional(),
     link: z.string().url().optional(),
+    // Projects: optional photo, kept next to the .md file, e.g. ./photo.jpg
+    image: image().optional(),
   }),
 });
 

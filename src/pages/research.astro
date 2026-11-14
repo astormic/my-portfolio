@@ -1,5 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import background from '../assets/bg-cell-2.png';
 import Base from '../layouts/Base.astro';
 import Entry from '../components/Entry.astro';
 import { href, isExternal } from '../lib/url';
@@ -44,7 +46,7 @@ const projects = await Promise.all(
 const sharedFirst = publications.some((paper) => paper.authors?.includes('†'));
 ---
 
-<Base heading="Research" intro="What I am working on now, and what has been published so far."
+<Base bare background={background} heading="Research" intro="What I am working on now, and what has been published so far."
   title="Research"
   description="Research projects and publications by Amir Rahmani."
 >
@@ -53,51 +55,63 @@ const sharedFirst = publications.some((paper) => paper.authors?.includes('†'))
     projects.length > 0 && (
       <section>
         <h2 class="section-title">Projects</h2>
-        <ul class="border-b border-rule">
+        <ul class="space-y-4">
           {projects.map((project) => (
-            <Entry
-              when={project.period ?? formatMonth(project.date)}
-              datetime={project.period === undefined ? isoDay(project.date) : undefined}
-            >
-              <h3 class="max-w-[60ch] text-lg font-[650]">{project.title}</h3>
-              {project.place && <p class="mt-1 text-muted">{project.place}</p>}
-
-              {project.hasBody && (
-                <div class="copy mt-3">
-                  <project.Body />
-                </div>
+            <li class:list={['panel grid', project.image && 'md:grid-cols-[17rem_1fr]']}>
+              {project.image && (
+                <Image
+                  src={project.image}
+                  alt=""
+                  width={640}
+                  height={640}
+                  class="h-56 w-full object-cover md:h-full"
+                />
               )}
-
-              {project.papers.length > 0 && (
-                <div class="mt-4">
-                  <h4 class="text-sm text-muted">Related papers</h4>
-                  <ul class="mt-1.5 max-w-[65ch] space-y-2">
-                    {project.papers.map((paper) => (
-                      <li class="border-l-2 border-rule pl-3 leading-snug">
-                        {paper.link ? (
-                          <a href={paper.link}>{paper.title}</a>
-                        ) : (
-                          paper.title
-                        )}
-                        <span class="block text-sm text-muted">
-                          {paper.status ? `${paper.status}, ` : ''}
-                          {paper.venue && <em>{paper.venue}</em>}
-                          {paper.venue && ' '}({year(paper.date)})
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {project.link && (
-                <p class="mt-3 text-sm">
-                  <a class="action" href={project.link}>
-                    {project.link.includes('github.com') ? 'Code on GitHub' : 'Project page'}
-                  </a>
+              <div class="min-w-0 p-6 sm:p-8">
+                <p class="text-sm tracking-wide text-accent">
+                  {[project.period ?? formatMonth(project.date), project.place]
+                    .filter(Boolean)
+                    .join(', ')}
                 </p>
-              )}
-            </Entry>
+                <h3 class="mt-1 max-w-[60ch] text-xl font-normal">{project.title}</h3>
+
+                {project.hasBody && (
+                  <div class="copy mt-3 text-ink/90">
+                    <project.Body />
+                  </div>
+                )}
+
+                {project.papers.length > 0 && (
+                  <div class="mt-5">
+                    <h4 class="text-sm text-muted">Related papers</h4>
+                    <ul class="mt-1.5 max-w-[65ch] space-y-2">
+                      {project.papers.map((paper) => (
+                        <li class="border-l-2 border-accent/50 pl-3 leading-snug">
+                          {paper.link ? (
+                            <a href={paper.link}>{paper.title}</a>
+                          ) : (
+                            paper.title
+                          )}
+                          <span class="block text-sm text-muted">
+                            {paper.status ? `${paper.status}, ` : ''}
+                            {paper.venue && <em>{paper.venue}</em>}
+                            {paper.venue && ' '}({year(paper.date)})
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {project.link && (
+                  <p class="mt-4 text-sm">
+                    <a class="action" href={project.link}>
+                      {project.link.includes('github.com') ? 'Code on GitHub' : 'Project page'}
+                    </a>
+                  </p>
+                )}
+              </div>
+            </li>
           ))}
         </ul>
       </section>
@@ -106,12 +120,12 @@ const sharedFirst = publications.some((paper) => paper.authors?.includes('†'))
 
   {
     site.instruments.length > 0 && (
-      <section class="mt-16 sm:mt-20">
+      <section class="mt-12">
         <h2 class="section-title">Microscopes I have built</h2>
-        <ul class="grid gap-x-10 border-t border-rule sm:grid-cols-2">
+        <ul class="grid gap-4 sm:grid-cols-2">
           {site.instruments.map((item) => (
-            <li class="border-b border-rule py-5">
-              <h3 class="font-[650]">{item.name}</h3>
+            <li class="panel p-6">
+              <h3 class="font-medium">{item.name}</h3>
               <p class="mt-1 max-w-[50ch]">{item.text}</p>
               <p class="mt-1 text-sm text-muted">{item.place}</p>
             </li>
@@ -123,12 +137,12 @@ const sharedFirst = publications.some((paper) => paper.authors?.includes('†'))
 
   {
     publications.length > 0 && (
-      <section class="mt-16 sm:mt-20">
+      <section class="panel mt-12 p-6 sm:p-8">
         <h2 class="section-title">Publications</h2>
         <ul class="border-b border-rule">
           {publications.map((paper) => (
             <Entry when={String(year(paper.date))} datetime={String(year(paper.date))}>
-              <h3 class="max-w-[60ch] text-lg font-[650]">{paper.title}</h3>
+              <h3 class="max-w-[60ch] text-lg font-medium">{paper.title}</h3>
               {(paper.authors || paper.venue || paper.status) && (
                 <p class="mt-1 max-w-[65ch] text-muted">
                   {paper.authors}

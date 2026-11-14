@@ -1,11 +1,24 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Entry from '../components/Entry.astro';
 import { site } from '../site.config';
 import { href } from '../lib/url';
+import background from '../assets/bg-cell-1.png';
+import cellImage from '../assets/bg-cell-2.png';
+import trackingImage from '../assets/particle-tracking.png';
+import objectiveImage from '../assets/cold-objective.jpg';
 
 // Positions held now, shown beside the bio.
 const current = site.experience.filter((row) => row.years.endsWith('to now'));
+
+// The three picture tiles under the bio. Each links to the Research page.
+// To change a picture, put the file in src/assets/ and import it above.
+const focus = [
+  { title: 'Sub-zero live-cell super-resolution imaging', image: cellImage },
+  { title: 'Single-molecule imaging and tracking', image: trackingImage },
+  { title: 'Optical system development', image: objectiveImage },
+];
 
 const sections = [
   { heading: 'Experience', rows: site.experience },
@@ -16,10 +29,10 @@ const sections = [
 ];
 ---
 
-<Base heading={site.name} intro={site.role}>
-  <div slot="lead" class="mt-8 grid gap-x-12 gap-y-8 lg:grid-cols-[1fr_19rem]">
+<Base heading={site.name} intro={site.role} background={background} bare>
+  <div slot="lead" class="mt-9 grid gap-x-10 gap-y-8 lg:grid-cols-[1fr_19rem]">
     <div>
-      <div class="copy text-lg">
+      <div class="copy text-lg text-ink/95">
         {site.bio.map((paragraph) => <p>{paragraph}</p>)}
       </div>
       <ul class="mt-7 flex flex-wrap gap-2.5">
@@ -46,12 +59,12 @@ const sections = [
 
     {
       current.length > 0 && (
-        <aside class="self-start rounded-md border border-rule bg-paper p-5">
-          <h2 class="text-sm font-semibold text-muted">Currently</h2>
+        <aside class="panel self-start p-5">
+          <h2 class="text-sm tracking-[0.14em] text-accent uppercase">Currently</h2>
           <ul class="mt-3 space-y-3">
             {current.map((row) => (
               <li class="leading-snug">
-                <span class="block font-medium">{row.title}</span>
+                <span class="block font-normal">{row.title}</span>
                 <span class="block text-sm text-muted">{row.place}</span>
               </li>
             ))}
@@ -61,16 +74,40 @@ const sections = [
     }
   </div>
 
+  <ul class="grid gap-4 sm:grid-cols-3">
+    {
+      focus.map((item) => (
+        <li>
+          <a
+            href={href('/research/')}
+            class="group relative block overflow-hidden border border-rule no-underline"
+          >
+            <Image
+              src={item.image}
+              alt=""
+              width={640}
+              height={480}
+              class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+            />
+            <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-4 pt-12 pb-4 text-lg leading-snug font-normal text-ink">
+              {item.title}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
   {
     sections.map(
       (section) =>
         section.rows.length > 0 && (
-          <section class="mt-16 first:mt-0 sm:mt-20 sm:first:mt-0">
+          <section class="panel mt-6 p-6 sm:p-8">
             <h2 class="section-title">{section.heading}</h2>
             <ul class="border-b border-rule">
               {section.rows.map((row) => (
                 <Entry when={row.years}>
-                  <h3 class="font-semibold">{row.title}</h3>
+                  <h3 class="font-medium">{row.title}</h3>
                   <p class="text-muted">{row.place}</p>
                   {row.note && <p class="mt-1 max-w-[60ch]">{row.note}</p>}
                 </Entry>
@@ -83,13 +120,11 @@ const sections = [
 
   {
     site.skills.length > 0 && (
-      <section class="mt-16 sm:mt-20">
+      <section class="panel mt-6 p-6 sm:p-8">
         <h2 class="section-title">Skills</h2>
         <ul class="flex flex-wrap gap-2">
           {site.skills.map((skill) => (
-            <li class="rounded-md border border-rule bg-surface px-3 py-1.5 text-[0.9375rem]">
-              {skill}
-            </li>
+            <li class="border border-rule bg-white/5 px-3 py-1.5 text-[0.95rem]">{skill}</li>
           ))}
         </ul>
       </section>

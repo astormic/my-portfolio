@@ -3,10 +3,10 @@ import { site } from '../site.config';
 import { href } from '../lib/url';
 ---
 
-<footer class="border-t border-rule bg-surface">
-  <div class="mx-auto flex max-w-5xl flex-wrap items-end justify-between gap-x-10 gap-y-4 px-5 py-10 text-sm sm:px-8">
+<footer class="border-t border-rule bg-black/55 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-end justify-between gap-x-10 gap-y-4 px-5 py-9 text-sm sm:px-8">
     <div>
-      <p class="font-serif text-lg font-semibold">{site.name}</p>
+      <p class="text-lg font-normal tracking-wide">{site.name}</p>
       <p class="text-muted">{site.role}</p>
       <p class="mt-3 text-muted">© {new Date().getFullYear()} {site.name}</p>
     </div>

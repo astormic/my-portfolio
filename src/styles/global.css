@@ -1,35 +1,26 @@
 @import 'tailwindcss';
 
-/* Design tokens. Change the colours here to re-theme the whole site. */
+/* Design tokens. The site is dark, with a microscopy image behind every page
+   and content sitting on translucent panels. Change the colours here. */
 @theme {
-  --font-sans: 'IBM Plex Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Source Serif 4 Variable', ui-serif, Georgia, serif;
+  --font-sans: 'Jost Variable', ui-sans-serif, system-ui, sans-serif;
 
-  --color-paper: #ffffff;
-  --color-surface: #f4f6f8;
-  --color-ink: #17202b;
-  --color-muted: #586574;
-  --color-rule: #dde3e9;
-  --color-accent: #0b5d7a;
+  --color-paper: #08090a;
+  --color-panel: rgb(16 17 19 / 0.66);
+  --color-ink: #f4f4f2;
+  --color-muted: #b7bbc0;
+  --color-rule: rgb(255 255 255 / 0.13);
+  --color-accent: #35d4b9;
 }
 
 @layer base {
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-paper: #0f1419;
-      --color-surface: #161d25;
-      --color-ink: #e6ebf0;
-      --color-muted: #9aa7b4;
-      --color-rule: #27313c;
-      --color-accent: #6cc7dc;
-    }
-  }
-
   html {
-    color-scheme: light dark;
+    color-scheme: dark;
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-size: 106.25%;
+    font-weight: 350;
     line-height: 1.6;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
@@ -55,9 +46,10 @@
 
   a {
     text-decoration-line: underline;
-    text-decoration-color: var(--color-rule);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.2em;
+    text-decoration-color: rgb(255 255 255 / 0.3);
+    text-decoration-thickness: 0.06em;
+    text-underline-offset: 0.22em;
+    transition: color 0.15s ease;
   }
 
   a:hover {
@@ -72,18 +64,27 @@
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    background: color-mix(in srgb, var(--color-accent) 35%, transparent);
   }
 }
 
 @layer components {
+  /* The translucent "glass" box that content sits on. */
+  .panel {
+    border: 1px solid var(--color-rule);
+    background: var(--color-panel);
+    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px);
+  }
+
   /* Section headings inside a page, e.g. "Experience". */
   .section-title {
-    margin-bottom: 1rem;
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    margin-bottom: 1.1rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
   /* Body text rendered from Markdown files. */
@@ -96,6 +97,9 @@
   .copy ul {
     list-style: disc;
     padding-left: 1.2em;
+  }
+  .copy ul li::marker {
+    color: var(--color-accent);
   }
   .copy ol {
     list-style: decimal;
@@ -111,16 +115,17 @@
     font-size: 0.88em;
   }
   .copy strong {
-    font-weight: 600;
+    font-weight: 500;
   }
 
   /* Small action links such as "Read the paper". */
   .action {
-    font-weight: 600;
+    font-weight: 450;
+    letter-spacing: 0.02em;
     color: var(--color-accent);
     text-decoration-color: color-mix(
       in srgb,
-      var(--color-accent) 35%,
+      var(--color-accent) 40%,
       transparent
     );
   }
@@ -128,24 +133,31 @@
   /* Outlined buttons, used for the profile links on the home page. */
   .button {
     display: inline-block;
-    border: 1px solid var(--color-rule);
-    border-radius: 6px;
-    background: var(--color-paper);
-    padding: 0.4rem 0.9rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
+    border: 1px solid rgb(255 255 255 / 0.28);
+    background: rgb(255 255 255 / 0.06);
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
     text-decoration: none;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
   }
   .button:hover {
     border-color: var(--color-accent);
+    background: rgb(255 255 255 / 0.1);
   }
   .button-primary {
     border-color: var(--color-accent);
     background: var(--color-accent);
-    color: var(--color-paper);
+    color: #04110f;
   }
   .button-primary:hover {
-    color: var(--color-paper);
+    background: var(--color-accent);
+    color: #04110f;
     filter: brightness(1.1);
   }
 }

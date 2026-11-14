@@ -36,7 +36,7 @@ const builtOn = new Date();
 
   <section class="mt-16 sm:mt-20">
     <div class="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-      <h2 class="text-xl font-[650]">Recently watched</h2>
+      <h2 class="section-title !mb-0">Recently watched</h2>
       {
         letterboxdUsername && (
           <a class="text-sm text-muted" href={profile}>
@@ -87,7 +87,7 @@ const builtOn = new Date();
                   ) : (
                     <div class="aspect-[2/3] w-full rounded-[3px] border border-rule bg-rule" />
                   )}
-                  <h3 class="mt-3 leading-snug font-[650]">
+                  <h3 class="mt-3 leading-snug font-medium">
                     {film.title}
                     {film.year && (
                       <span class="font-normal text-muted"> ({film.year})</span>

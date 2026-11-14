@@ -23,7 +23,7 @@ const filters = [
 ].filter((filter) => cards.some((card) => card.category === filter.id));
 ---
 
-<Base heading="News" intro="Conferences, public engagement and the occasional note."
+<Base bare heading="News" intro="Conferences, public engagement and the occasional note."
   title="News"
   description="Conferences, public engagement and notes from Amir Rahmani."
 >
@@ -48,16 +48,23 @@ const filters = [
           {cards.map((card) => (
             <li
               data-category={card.category}
-              class="flex flex-col overflow-hidden rounded-md border border-rule"
+              class="panel flex flex-col overflow-hidden"
             >
               {card.image && (
                 <Image
                   src={card.image}
                   alt=""
                   width={720}
-                  height={405}
+                  height={card.image.height > card.image.width ? 540 : 405}
+                  position={card.image.height > card.image.width ? 'top' : 'centre'}
                   loading="lazy"
-                  class="aspect-video w-full object-cover"
+                  class:list={[
+                    'w-full object-cover',
+                    // Portrait photos get a taller frame, cropped from the top.
+                    card.image.height > card.image.width
+                      ? 'aspect-[4/3] object-[center_12%]'
+                      : 'aspect-video',
+                  ]}
                 />
               )}
               <div class="flex grow flex-col p-5 sm:p-6">
@@ -67,8 +74,8 @@ const filters = [
                   )}
                   {card.place && `, ${card.place}`}
                 </p>
-                <h2 class="mt-2 text-lg leading-snug font-[650]">{card.title}</h2>
-                <p class="mt-1 text-sm font-[600] text-accent">{card.kind}</p>
+                <h2 class="mt-2 text-lg leading-snug font-medium">{card.title}</h2>
+                <p class="mt-1 text-sm font-medium text-accent">{card.kind}</p>
                 {card.hasBody && (
                   <div class="copy mt-3 text-[0.95rem]">
                     <card.Body />
@@ -98,9 +105,11 @@ const filters = [
   .filter {
     cursor: pointer;
     border: 1px solid var(--color-rule);
-    border-radius: 999px;
     padding: 0.3rem 0.9rem;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgb(0 0 0 / 0.35);
     color: var(--color-muted);
   }
   .filter:hover {
@@ -110,7 +119,7 @@ const filters = [
   .filter[aria-pressed='true'] {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: var(--color-paper);
+    color: #04110f;
   }
 </style>
 

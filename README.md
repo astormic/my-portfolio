@@ -31,7 +31,9 @@ npm run preview    # serves dist/ to check the build
 | Paper PDFs | drop them in `public/papers/` |
 | News cards | one `.md` file each in `src/content/news/` |
 | Books | one `.yaml` file each in `src/content/books/`, cover in `covers/` |
-| Colours and fonts | the `@theme` block in `src/styles/global.css` |
+| Colours and font | the `@theme` block in `src/styles/global.css` |
+| Page background images and home page tiles | files in `src/assets/`, set in each page in `src/pages/` |
+| A photo on a news card or project | put the image next to its `.md` file and add `image: ./name.jpg` |
 
 Everything in the repository now is example content. Delete the example files
 once you have added your own.

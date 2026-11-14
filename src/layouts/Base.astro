@@ -1,9 +1,11 @@
 ---
-import '@fontsource-variable/ibm-plex-sans';
-import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/jost';
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import defaultBackground from '../assets/bg-cell-1.png';
 import { site } from '../site.config';
 import { href } from '../lib/url';
 
@@ -11,14 +13,27 @@ interface Props {
   // Browser tab title. Left out on the home page.
   title?: string;
   description?: string;
-  // The large heading in the band at the top of the page, and the line under it.
+  // The large heading at the top of the page, and the line under it.
   heading: string;
   intro?: string;
+  // The image that fills the page behind the content.
+  background?: ImageMetadata;
+  // Set when the page lays out its own panels, instead of one big panel.
+  bare?: boolean;
 }
 
-const { title, description = site.description, heading, intro } = Astro.props;
+const {
+  title,
+  description = site.description,
+  heading,
+  intro,
+  background = defaultBackground,
+  bare = false,
+} = Astro.props;
+
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const backdrop = await getImage({ src: background, width: 1600, format: 'webp', quality: 70 });
 ---
 
 <!doctype html>
@@ -28,35 +43,55 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#08090a" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={href('/favicon.svg')} />
+    <link rel="preload" as="image" href={backdrop.src} fetchpriority="high" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta name="generator" content={Astro.generator} />
   </head>
-  <body class="flex min-h-screen flex-col bg-paper text-ink antialiased">
+  <body class="flex min-h-screen flex-col text-ink antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-10 focus:bg-paper focus:px-3 focus:py-2"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-3 focus:py-2"
     >
       Skip to content
     </a>
-    <Header />
 
-    <div class="border-b border-rule bg-surface">
-      <div class="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-16">
-        <h1 class="font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
-          {heading}
-        </h1>
-        {intro && <p class="mt-3 max-w-[60ch] text-lg text-muted sm:text-xl">{intro}</p>}
-        <slot name="lead" />
-      </div>
+    <!-- The page background: one image, fixed in place, darkened for legibility. -->
+    <div class="fixed inset-0 -z-10" aria-hidden="true">
+      <img src={backdrop.src} alt="" class="h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/65 to-black/85"></div>
     </div>
 
-    <main id="main" class="mx-auto w-full max-w-5xl grow px-5 py-12 sm:px-8 sm:py-16">
-      <slot />
+    <Header />
+
+    <div class="mx-auto w-full max-w-5xl px-5 pt-14 pb-10 sm:px-8 sm:pt-24 sm:pb-14">
+      <h1
+        class:list={[
+          'font-light text-5xl sm:text-6xl',
+          title ? 'tracking-[0.08em] uppercase' : 'tracking-tight',
+        ]}
+      >
+        {heading}
+      </h1>
+      {intro && <p class="mt-4 max-w-[60ch] text-xl font-light text-ink/85">{intro}</p>}
+      <slot name="lead" />
+    </div>
+
+    <main id="main" class="mx-auto w-full max-w-5xl grow px-5 pb-20 sm:px-8">
+      {
+        bare ? (
+          <slot />
+        ) : (
+          <div class="panel p-6 sm:p-10">
+            <slot />
+          </div>
+        )
+      }
     </main>
     <Footer />
   </body>
