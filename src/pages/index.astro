@@ -6,9 +6,12 @@ import { site } from '../site.config';
 import { href } from '../lib/url';
 
 const sections = [
-  { heading: 'Education', rows: site.education },
   { heading: 'Experience', rows: site.experience },
+  { heading: 'Education', rows: site.education },
+  { heading: 'Teaching', rows: site.teaching },
+  { heading: 'Honours and awards', rows: site.awards },
 ];
+const hasLinks = Boolean(site.cv) || site.links.length > 0;
 ---
 
 <Base>
@@ -18,7 +21,7 @@ const sections = [
     {site.bio.map((paragraph) => <p>{paragraph}</p>)}
   </div>
 
-  <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+  <ul class:list={['mt-8 flex flex-wrap gap-x-6 gap-y-2', !hasLinks && 'hidden']}>
     {
       site.cv && (
         <li>

@@ -1,68 +1,138 @@
 // Everything personal lives in this file. Edit it first.
 
 export const site = {
-  name: 'Your Name',
-  role: 'PhD researcher in light microscopy',
+  name: 'Amir Rahmani',
+  role: 'Postdoctoral Research Associate, University of Cambridge',
   description:
-    'Personal site of Your Name: research, outreach, reading and listening.',
+    'Amir Rahmani: microscopy researcher at the University of Cambridge. Research, talks, reading and listening.',
 
   // Shown at the top of the home page. One string per paragraph.
   bio: [
-    'I am a researcher at the University of Somewhere, where I build and use microscopes to study how cells organise themselves. Replace this paragraph with two or three sentences about what you work on and why.',
-    'Before that I studied physics, and I still spend a lot of time on instrument design, image analysis and teaching.',
+    'I am a physicist who builds optical microscopes. I am a Postdoctoral Research Associate at the University of Cambridge, a College Research Associate at Wolfson College, and a visiting researcher at the British Antarctic Survey.',
+    'My current work is on imaging living cells at near-freezing and sub-zero temperatures. Before that, during my PhD in Physics at the University of Leeds, I worked on single-molecule imaging flow cytometry and nanometre-precision focus stabilisation for super-resolution microscopy.',
   ],
 
-  // Put your CV at public/cv.pdf, or set this to '' to hide the link.
-  cv: '/cv.pdf',
+  // Put your CV at public/cv.pdf and set this to '/cv.pdf' to show a
+  // download link. Leave '' to hide it.
+  cv: '',
 
-  links: [
-    { label: 'Email', href: 'mailto:you@example.com' },
-    { label: 'Google Scholar', href: 'https://scholar.google.com/' },
-    { label: 'ORCID', href: 'https://orcid.org/' },
-    { label: 'GitHub', href: 'https://github.com/' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-  ],
+  // Shown on the home page and in the footer. Add your own, for example:
+  // { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=...' },
+  links: [] as { label: string; href: string }[],
 
-  education: [
+  experience: [
     {
-      years: '2023 to now',
-      title: 'PhD, Biophysics',
-      place: 'University of Somewhere',
-      note: 'Thesis on live-cell super-resolution imaging.',
+      years: 'Oct 2025 to now',
+      title: 'College Research Associate',
+      place: 'Wolfson College, Cambridge',
+      note: '',
     },
     {
-      years: '2021 to 2022',
-      title: 'MSc, Optics and Photonics',
-      place: 'Another University',
-      note: 'Distinction.',
+      years: 'Oct 2025 to now',
+      title: 'Postdoctoral Research Associate',
+      place: 'University of Cambridge',
+      note: '',
     },
     {
-      years: '2018 to 2021',
-      title: 'BSc, Physics',
-      place: 'Another University',
+      years: 'Mar 2025 to now',
+      title: 'Visiting Researcher',
+      place: 'British Antarctic Survey, Cambridge',
+      note: '',
+    },
+    {
+      years: 'Mar 2025 to Sep 2025',
+      title: 'Postdoctoral Research Assistant',
+      place: 'University of Cambridge',
+      note: '',
+    },
+    {
+      years: 'Dec 2019 to May 2020',
+      title: 'Visiting Researcher',
+      place: 'ICFO, Barcelona, Spain',
+      note: '',
+    },
+    {
+      years: 'Jul 2018 to Jul 2019',
+      title: 'Student',
+      place: 'EMBL, Heidelberg, Germany',
       note: '',
     },
   ],
 
-  experience: [
+  education: [
     {
-      years: '2022 to 2023',
-      title: 'Research assistant',
-      place: 'Imaging Facility, Institute Name',
-      note: 'Ran the confocal and light-sheet instruments and trained new users.',
+      years: 'Oct 2022 to Nov 2025',
+      title: 'PhD, Physics',
+      place: 'University of Leeds',
+      note: '',
     },
     {
-      years: 'Summer 2021',
-      title: 'Research intern',
-      place: 'Company or Lab Name',
+      years: 'Sep 2021 to Sep 2022',
+      title: 'MSc, Physics',
+      place: "King's College London",
+      note: '',
+    },
+  ],
+
+  teaching: [
+    {
+      years: '2025 to 2026',
+      title: 'Teaching Assistant, Computational Skills: Python',
+      place: 'University of Cambridge',
+      note: '',
+    },
+    {
+      years: '2022 to 2024',
+      title: 'Teaching Assistant, Computational Skills: Python',
+      place: 'University of Leeds',
+      note: '',
+    },
+    {
+      years: '2022 to 2024',
+      title: 'Teaching Assistant, Introduction to Experimental Physics',
+      place: 'University of Leeds',
+      note: '',
+    },
+  ],
+
+  awards: [
+    {
+      years: '2024',
+      title: 'Journal of Cell Science Training Grant',
+      place: 'The Company of Biologists, UK',
+      note: '',
+    },
+    {
+      years: '2021',
+      title: 'EPSRC Doctoral Training Programme Studentship',
+      place: 'UKRI, UK',
+      note: '',
+    },
+    {
+      years: '2019',
+      title: 'Student Research Fellowship',
+      place: 'ICFO, Spain',
+      note: '',
+    },
+    {
+      years: '2018',
+      title: 'Ranked 7th nationwide, Iranian University Entrance Examination',
+      place: 'Iran',
+      note: '',
+    },
+    {
+      years: '2017',
+      title: 'Bronze Medal, 21st Iran National Physics Olympiad',
+      place: 'Iran',
       note: '',
     },
   ],
 
   skills: [
-    'Confocal, light-sheet and super-resolution microscopy',
-    'Python, Fiji and image analysis pipelines',
-    'Optical design and alignment',
+    'Optical microscopy and microscope development',
+    'Super-resolution microscopy and single-molecule tracking',
+    'Immunostaining',
+    'Python',
   ],
 
   media: {

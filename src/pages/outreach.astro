@@ -10,6 +10,7 @@ const entries = await Promise.all(
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
     .map(async (entry) => ({
       ...entry.data,
+      hasBody: Boolean(entry.body?.trim()),
       Body: (await render(entry)).Content,
     })),
 );
@@ -17,11 +18,11 @@ const entries = await Promise.all(
 
 <Base
   title="Outreach"
-  description="Talks, workshops and writing for audiences outside the lab."
+  description="Talks, posters and public engagement by Amir Rahmani."
 >
   <PageTitle
     title="Outreach"
-    intro="Talks, workshops and writing for people outside the lab."
+    intro="Talks, posters and public engagement."
   />
 
   {
@@ -34,9 +35,11 @@ const entries = await Promise.all(
               {item.kind}
               {item.place && `, ${item.place}`}
             </p>
-            <div class="copy mt-3">
-              <item.Body />
-            </div>
+            {item.hasBody && (
+              <div class="copy mt-3">
+                <item.Body />
+              </div>
+            )}
             {item.link && (
               <p class="mt-3 text-sm">
                 <a class="action" href={item.link}>

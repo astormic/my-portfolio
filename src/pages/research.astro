@@ -6,31 +6,47 @@ import Entry from '../components/Entry.astro';
 import { href, isExternal } from '../lib/url';
 import { formatMonth, isoDay } from '../lib/dates';
 
-const all = (await getCollection('research')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+const all = await getCollection('research');
+const year = (d: Date) => d.getUTCFullYear();
+
+// Publications: newest year first, then by `order`, then by date.
+const publications = await Promise.all(
+  all
+    .filter((entry) => entry.data.kind === 'publication')
+    .sort(
+      (a, b) =>
+        year(b.data.date) - year(a.data.date) ||
+        a.data.order - b.data.order ||
+        b.data.date.getTime() - a.data.date.getTime(),
+    )
+    .map(async (entry) => ({
+      ...entry.data,
+      id: entry.id,
+      hasAbstract: Boolean(entry.body?.trim()),
+      Abstract: (await render(entry)).Content,
+    })),
 );
 
-const prepare = (kind: 'project' | 'publication') =>
-  Promise.all(
-    all
-      .filter((entry) => entry.data.kind === kind)
-      .map(async (entry) => ({
-        ...entry.data,
-        id: entry.id,
-        hasAbstract: Boolean(entry.body?.trim()),
-        Abstract: (await render(entry)).Content,
-      })),
-  );
+// Projects: newest first, each with the papers that name it in `projects`.
+const projects = await Promise.all(
+  all
+    .filter((entry) => entry.data.kind === 'project')
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .map(async (entry) => ({
+      ...entry.data,
+      id: entry.id,
+      hasBody: Boolean(entry.body?.trim()),
+      Body: (await render(entry)).Content,
+      papers: publications.filter((paper) => paper.projects.includes(entry.id)),
+    })),
+);
 
-const sections = [
-  { heading: 'Projects', items: await prepare('project') },
-  { heading: 'Publications', items: await prepare('publication') },
-];
+const sharedFirst = publications.some((paper) => paper.authors?.includes('†'));
 ---
 
 <Base
   title="Research"
-  description="Research projects and publications, with abstracts and PDFs."
+  description="Research projects and publications by Amir Rahmani."
 >
   <PageTitle
     title="Research"
@@ -38,60 +54,114 @@ const sections = [
   />
 
   {
-    sections.map(
-      (section) =>
-        section.items.length > 0 && (
-          <section class="mt-16 first-of-type:mt-0 sm:mt-20">
-            <h2 class="mb-4 text-xl font-[650]">{section.heading}</h2>
-            <ul class="border-b border-rule">
-              {section.items.map((item) => (
-                <Entry when={formatMonth(item.date)} datetime={isoDay(item.date)}>
-                  <h3 class="max-w-[60ch] text-lg font-[650]">{item.title}</h3>
-                  {(item.authors || item.venue) && (
-                    <p class="mt-1 max-w-[65ch] text-muted">
-                      {item.authors}
-                      {item.authors && item.venue && <br />}
-                      {item.venue && <em>{item.venue}</em>}
-                    </p>
-                  )}
+    projects.length > 0 && (
+      <section>
+        <h2 class="mb-4 text-xl font-[650]">Projects</h2>
+        <ul class="border-b border-rule">
+          {projects.map((project) => (
+            <Entry
+              when={project.period ?? formatMonth(project.date)}
+              datetime={project.period === undefined ? isoDay(project.date) : undefined}
+            >
+              <h3 class="max-w-[60ch] text-lg font-[650]">{project.title}</h3>
+              {project.place && <p class="mt-1 text-muted">{project.place}</p>}
 
-                  {item.hasAbstract && (
-                    <details class="group mt-3">
-                      <summary class="w-fit cursor-pointer text-sm text-muted hover:text-accent">
-                        <span class="group-open:hidden">Show abstract</span>
-                        <span class="hidden group-open:inline">Hide abstract</span>
-                      </summary>
-                      <div class="copy mt-3">
-                        <item.Abstract />
-                      </div>
-                    </details>
-                  )}
+              {project.hasBody && (
+                <div class="copy mt-3">
+                  <project.Body />
+                </div>
+              )}
 
-                  {(item.pdf || item.link) && (
-                    <p class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
-                      {item.pdf && (
-                        <a
-                          class="action"
-                          href={href(item.pdf)}
-                          download={!isExternal(item.pdf)}
-                        >
-                          Download PDF
-                        </a>
-                      )}
-                      {item.link && (
-                        <a class="action" href={item.link}>
-                          {section.heading === 'Projects'
-                            ? 'Project page'
-                            : 'Publisher page'}
-                        </a>
-                      )}
-                    </p>
+              {project.papers.length > 0 && (
+                <div class="mt-4">
+                  <h4 class="text-sm text-muted">Related papers</h4>
+                  <ul class="mt-1.5 max-w-[65ch] space-y-2">
+                    {project.papers.map((paper) => (
+                      <li class="border-l-2 border-rule pl-3 leading-snug">
+                        {paper.link ? (
+                          <a href={paper.link}>{paper.title}</a>
+                        ) : (
+                          paper.title
+                        )}
+                        <span class="block text-sm text-muted">
+                          {paper.status ? `${paper.status}, ` : ''}
+                          {paper.venue && <em>{paper.venue}</em>}
+                          {paper.venue && ' '}({year(paper.date)})
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {project.link && (
+                <p class="mt-3 text-sm">
+                  <a class="action" href={project.link}>
+                    Project page
+                  </a>
+                </p>
+              )}
+            </Entry>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    publications.length > 0 && (
+      <section class="mt-16 sm:mt-20">
+        <h2 class="mb-4 text-xl font-[650]">Publications</h2>
+        <ul class="border-b border-rule">
+          {publications.map((paper) => (
+            <Entry when={String(year(paper.date))} datetime={String(year(paper.date))}>
+              <h3 class="max-w-[60ch] text-lg font-[650]">{paper.title}</h3>
+              {(paper.authors || paper.venue || paper.status) && (
+                <p class="mt-1 max-w-[65ch] text-muted">
+                  {paper.authors}
+                  {paper.authors && (paper.venue || paper.status) && <br />}
+                  {paper.status && `${paper.status}, `}
+                  {paper.venue && <em>{paper.venue}</em>}
+                </p>
+              )}
+
+              {paper.hasAbstract && (
+                <details class="group mt-3">
+                  <summary class="w-fit cursor-pointer text-sm text-muted hover:text-accent">
+                    <span class="group-open:hidden">Show abstract</span>
+                    <span class="hidden group-open:inline">Hide abstract</span>
+                  </summary>
+                  <div class="copy mt-3">
+                    <paper.Abstract />
+                  </div>
+                </details>
+              )}
+
+              {(paper.pdf || paper.link) && (
+                <p class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+                  {paper.pdf && (
+                    <a
+                      class="action"
+                      href={href(paper.pdf)}
+                      download={!isExternal(paper.pdf)}
+                    >
+                      Download PDF
+                    </a>
                   )}
-                </Entry>
-              ))}
-            </ul>
-          </section>
-        ),
+                  {paper.link && (
+                    <a class="action" href={paper.link}>
+                      Read the paper
+                    </a>
+                  )}
+                </p>
+              )}
+            </Entry>
+          ))}
+        </ul>
+        {sharedFirst && (
+          <p class="mt-4 text-sm text-muted">† These authors contributed equally.</p>
+        )}
+      </section>
     )
   }
 

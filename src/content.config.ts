@@ -3,13 +3,26 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 // Research: one Markdown file per project or publication.
-// The body of the file is the abstract.
+// For a project the body is its description; for a publication, its abstract.
 const research = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/research' }),
   schema: z.object({
     title: z.string(),
+    // Used for ordering (newest first). Publications show the year only.
     date: z.coerce.date(),
     kind: z.enum(['project', 'publication']),
+    // Projects: text shown in the date column, e.g. "2023 to 2024".
+    // Use '' to show nothing. If left out, the date is shown.
+    period: z.string().optional(),
+    // Projects: where the work is or was done.
+    place: z.string().optional(),
+    // Publications: file names (without .md) of the projects this paper
+    // belongs to. It is then listed under those projects as a related paper.
+    projects: z.array(z.string()).default([]),
+    // Publications: e.g. "Submitted" or "Invited for revision".
+    status: z.string().optional(),
+    // Publications: position within the same year, lowest first.
+    order: z.number().default(100),
     authors: z.string().optional(),
     venue: z.string().optional(),
     // A file in public/ (e.g. /papers/my-paper.pdf) or a full URL.
