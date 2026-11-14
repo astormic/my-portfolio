@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Stars from '../components/Stars.astro';
+import background from '../assets/bg-observatory.jpg';
 import { site } from '../site.config';
 import { getLatestFilms } from '../lib/letterboxd';
 import { formatDay, isoDay } from '../lib/dates';
@@ -15,7 +16,7 @@ const profile = `https://letterboxd.com/${letterboxdUsername}/`;
 const builtOn = new Date();
 ---
 
-<Base heading="Media" intro="What I am listening to and watching." title="Media" description="What I am listening to and watching.">
+<Base background={background} heading="Media" intro="What I am listening to and watching." title="Media" description="What I am listening to and watching.">
 
   {
     spotifyPlaylistId && (
