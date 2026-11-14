@@ -62,8 +62,9 @@ const books = defineCollection({
     z.object({
       title: z.string(),
       author: z.string(),
-      rating: z.number().min(0).max(5).multipleOf(0.5),
-      cover: image(),
+      rating: z.number().min(0).max(5).multipleOf(0.5).optional(),
+      // A photo of the book or its cover. Without one, a plain title card is shown.
+      cover: image().optional(),
       read: z.coerce.date().optional(),
       link: z.string().url().optional(),
     }),

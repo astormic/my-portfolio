@@ -4,11 +4,6 @@ export const site = {
   name: 'Amir Rahmani',
   // Shown with the logo at the top of every page.
   brand: 'Zarrenama',
-  // Logo shown in the footer. The image is src/assets/cambridge-ceb-logo.png.
-  institute: {
-    name: 'University of Cambridge, Department of Chemical Engineering and Biotechnology',
-    href: 'https://www.ceb.cam.ac.uk/',
-  },
   // Shown at the end of the home page, under "About Zarrenama".
   brandMeaning: [
     'Zarrenama (ذره‌نما) is a Persian word. Zarre is a particle: the old word for the specks of dust you see drifting in a beam of sunlight. Nama means "that which shows". Together it reads as "the particle-revealer", something that makes the very small visible, which is what a microscope does.',

@@ -65,8 +65,8 @@ Only `title`, `date` and `kind` are required.
 ```yaml
 title: Book Title
 author: Author Name
-rating: 4.5              # 0 to 5, half stars allowed
-cover: ./covers/my-book.jpg
+rating: 4.5              # optional: 0 to 5, half stars allowed
+cover: ./covers/my-book.jpg  # optional: a photo or cover image
 read: 2026-10-01         # optional, used for ordering
 link: https://...        # optional
 ```
