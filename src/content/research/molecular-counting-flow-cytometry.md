@@ -5,6 +5,5 @@ kind: 'publication'
 order: 4
 authors: 'Rahmani, A., Christie, M., Truesdale, A., Barr, T., Johnson, B., Cook, G., Thorne, J., Ponjavic, A.'
 venue: 'Advanced Science'
-status: 'Invited for revision'
 projects: [flow-cytometry]
 ---
