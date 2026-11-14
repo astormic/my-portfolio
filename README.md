@@ -6,7 +6,7 @@ build time; no JavaScript is shipped apart from Astro's tiny link prefetcher
 and the Spotify player.
 
 Pages: **Home** (bio, education, CV, links), **Research** (projects and
-publications with abstracts and PDFs), **Outreach**, **Books** (cover grid with
+publications with abstracts and PDFs), **News** (cards for conferences, public engagement and notes), **Books** (cover grid with
 star ratings) and **Media** (Spotify playlist and latest Letterboxd ratings).
 
 ## Run it locally
@@ -29,7 +29,7 @@ npm run preview    # serves dist/ to check the build
 | Your CV | replace `public/cv.pdf` |
 | Projects and publications | one `.md` file each in `src/content/research/` |
 | Paper PDFs | drop them in `public/papers/` |
-| Outreach | one `.md` file each in `src/content/outreach/` |
+| News cards | one `.md` file each in `src/content/news/` |
 | Books | one `.yaml` file each in `src/content/books/`, cover in `covers/` |
 | Colours and font | the `@theme` block in `src/styles/global.css` |
 
@@ -127,7 +127,7 @@ rebuild stops, push any change or re-enable it from the Actions tab.
     ├── site.config.ts             Your details: edit this first
     ├── content.config.ts          Fields each content file may have
     ├── components/
-    │   ├── Entry.astro            A dated row (CV, research, outreach)
+    │   ├── Entry.astro            A dated row (CV, research)
     │   ├── Footer.astro
     │   ├── Header.astro
     │   ├── PageTitle.astro
@@ -135,7 +135,7 @@ rebuild stops, push any change or re-enable it from the Actions tab.
     ├── content/
     │   ├── books/                 One .yaml per book
     │   │   └── covers/            Cover images
-    │   ├── outreach/              One .md per activity
+    │   ├── news/                  One .md per card
     │   └── research/              One .md per project or publication
     ├── layouts/
     │   └── Base.astro             HTML shell shared by every page
@@ -146,7 +146,7 @@ rebuild stops, push any change or re-enable it from the Actions tab.
     ├── pages/
     │   ├── index.astro            Home
     │   ├── research.astro
-    │   ├── outreach.astro
+    │   ├── news.astro   
     │   ├── books.astro
     │   ├── media.astro
     │   └── 404.astro

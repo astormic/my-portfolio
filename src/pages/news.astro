@@ -1,0 +1,135 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageTitle from '../components/PageTitle.astro';
+import { formatMonth, isoDay } from '../lib/dates';
+
+const cards = await Promise.all(
+  (await getCollection('news'))
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .map(async (entry) => ({
+      ...entry.data,
+      hasBody: Boolean(entry.body?.trim()),
+      Body: (await render(entry)).Content,
+    })),
+);
+
+// Filter buttons, shown only for categories that have at least one card.
+const filters = [
+  { id: 'conference', label: 'Conferences' },
+  { id: 'public', label: 'Public engagement' },
+  { id: 'award', label: 'Awards' },
+  { id: 'note', label: 'Notes' },
+].filter((filter) => cards.some((card) => card.category === filter.id));
+---
+
+<Base
+  title="News"
+  description="Conferences, public engagement and notes from Amir Rahmani."
+>
+  <PageTitle
+    title="News"
+    intro="Conferences, public engagement and the occasional note."
+  />
+
+  {
+    cards.length > 0 ? (
+      <>
+        {filters.length > 1 && (
+          <div class="mb-8 flex flex-wrap gap-2" role="group" aria-label="Show">
+            <button class="filter" data-filter="all" aria-pressed="true">
+              All
+            </button>
+            {filters.map((filter) => (
+              <button class="filter" data-filter={filter.id} aria-pressed="false">
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <ul id="cards" class="grid items-start gap-5 md:grid-cols-2">
+          {cards.map((card) => (
+            <li
+              data-category={card.category}
+              class="flex flex-col overflow-hidden rounded-md border border-rule"
+            >
+              {card.image && (
+                <Image
+                  src={card.image}
+                  alt=""
+                  width={720}
+                  height={405}
+                  loading="lazy"
+                  class="aspect-video w-full object-cover"
+                />
+              )}
+              <div class="flex grow flex-col p-5 sm:p-6">
+                <p class="text-sm text-muted tabular-nums">
+                  {card.when ?? (
+                    <time datetime={isoDay(card.date)}>{formatMonth(card.date)}</time>
+                  )}
+                  {card.place && `, ${card.place}`}
+                </p>
+                <h2 class="mt-2 text-lg leading-snug font-[650]">{card.title}</h2>
+                <p class="mt-1 text-sm font-[600] text-accent">{card.kind}</p>
+                {card.hasBody && (
+                  <div class="copy mt-3 text-[0.95rem]">
+                    <card.Body />
+                  </div>
+                )}
+                {card.link && (
+                  <p class="mt-auto pt-4 text-sm">
+                    <a class="action" href={card.link}>
+                      {card.link.includes('linkedin.com') ? 'Post on LinkedIn' : 'See more'}
+                    </a>
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : (
+      <p class="text-muted">
+        Nothing here yet. Add a Markdown file to src/content/news/.
+      </p>
+    )
+  }
+</Base>
+
+<style>
+  .filter {
+    cursor: pointer;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+  .filter:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+  .filter[aria-pressed='true'] {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const cards = document.querySelectorAll<HTMLElement>('#cards > li');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const chosen = button.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+      cards.forEach((card) => {
+        card.hidden = chosen !== 'all' && card.dataset.category !== chosen;
+      });
+    });
+  });
+</script>

@@ -31,16 +31,26 @@ const research = defineCollection({
   }),
 });
 
-// Outreach: talks, workshops, articles, school visits.
-const outreach = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/outreach' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date(),
-    kind: z.string(),
-    place: z.string().optional(),
-    link: z.string().url().optional(),
-  }),
+// News: one Markdown file per conference, public engagement event or note.
+// Each becomes a card on the News page; the body is the text on the card.
+const news = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      // Used for ordering (newest first) and shown as "Apr 2026".
+      date: z.coerce.date(),
+      // Shown instead of the date when set, e.g. "2024".
+      when: z.string().optional(),
+      // What you did there, e.g. "Oral presentation" or "Public engagement".
+      kind: z.string(),
+      // Which filter button the card belongs to.
+      category: z.enum(['conference', 'public', 'award', 'note']),
+      place: z.string().optional(),
+      // Optional photo: put the file next to the .md file, e.g. ./photo.jpg
+      image: image().optional(),
+      link: z.string().url().optional(),
+    }),
 });
 
 // Books: one small YAML file per book, cover image alongside in covers/.
@@ -57,4 +67,4 @@ const books = defineCollection({
     }),
 });
 
-export const collections = { research, outreach, books };
+export const collections = { research, news, books };
