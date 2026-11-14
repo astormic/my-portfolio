@@ -4,12 +4,12 @@ export const site = {
   name: 'Amir Rahmani',
   role: 'Postdoctoral Research Associate, University of Cambridge',
   description:
-    'Amir Rahmani: microscopy researcher at the University of Cambridge. Research, news, reading and listening.',
+    'Amir Rahmani: Researcher at the University of Cambridge. Research, news, reading and listening.',
 
   // Shown at the top of the home page. One string per paragraph.
   bio: [
-    'I am a physicist who builds optical microscopes. I am a Postdoctoral Research Associate in the Kaminski Group at the University of Cambridge, a College Research Associate at Wolfson College, and a visiting researcher at the British Antarctic Survey.',
-    'My current work is on imaging living cells at near-freezing and sub-zero temperatures. Before that, during my PhD in Physics at the University of Leeds, I worked on single-molecule imaging flow cytometry and nanometre-precision focus stabilisation for super-resolution microscopy.',
+    'I am a physicist with interest in imaging individual molecules and quantum biology. I am currently a Postdoctoral Research Associate in the Laser Analytics Group at the University of Cambridge, a College Research Associate at Wolfson College, and a visiting researcher at the British Antarctic Survey.',
+    'My current work is on understanding the membrane of living cells at near-freezing and sub-zero temperatures. Before that, during my PhD in Physics at the University of Leeds, I worked on single-molecule flow cytometry and nanometre-precision focus stabilisation for super-resolution microscopy.',
   ],
 
   // Put your CV at public/cv.pdf and set this to '/cv.pdf' to show a
@@ -29,27 +29,21 @@ export const site = {
 
   experience: [
     {
+      years: 'Mar 2025 to now',
+      title: 'Postdoctoral Research Associate',
+      place: 'University of Cambridge',
+      note: '',
+    },
+    {
       years: 'Oct 2025 to now',
       title: 'College Research Associate',
       place: 'Wolfson College, Cambridge',
       note: '',
     },
     {
-      years: 'Oct 2025 to now',
-      title: 'Postdoctoral Research Associate',
-      place: 'University of Cambridge',
-      note: '',
-    },
-    {
       years: 'Mar 2025 to now',
       title: 'Visiting Researcher',
       place: 'British Antarctic Survey, Cambridge',
-      note: '',
-    },
-    {
-      years: 'Mar 2025 to Sep 2025',
-      title: 'Postdoctoral Research Assistant',
-      place: 'University of Cambridge',
       note: '',
     },
     {
@@ -122,12 +116,6 @@ export const site = {
       note: '',
     },
     {
-      years: '2018',
-      title: 'Ranked 7th nationwide, Iranian University Entrance Examination',
-      place: 'Iran',
-      note: '',
-    },
-    {
       years: '2017',
       title: 'Bronze Medal, 21st Iran National Physics Olympiad',
       place: 'Iran',
@@ -137,33 +125,32 @@ export const site = {
 
   supervision: [
     {
-      years: '2025 to now',
+      years: '2025-2026',
       title: 'Transformer-based single-particle tracking analysis',
       place: 'Frederick Lawrence, MPhil DIS, Department of Physics, University of Cambridge',
       note: '',
     },
     {
-      years: '2025 to 2026',
+      years: '2025-2026',
       title: 'Characterisation of membrane bilayer models at cold using solvatochromic dyes',
       place: 'Shonit Sharma and Boyd Lyons, Part IIB, Department of Chemical Engineering and Biotechnology, University of Cambridge',
       note: '',
     },
   ],
 
-  // Shown on the Research page under "Microscopes I have built".
   instruments: [
     {
-      name: 'Oblique plane microscope for flow cytometry',
+      name: 'High-NA oblique plane microscope',
       text: 'Oblique plane microscopy integrated with microfluidics, for counting individual molecules on flowing cells.',
       place: 'Ponjavic Lab, Leeds',
     },
     {
       name: 'PiFocus',
-      text: 'Astigmatism-based focus stabilisation on a Raspberry Pi, with better than 10 nm axial precision over more than 10 µm.',
+      text: 'Astigmatism-based focus stabilisation with better than 10 nm axial precision over more than 10 µm.',
       place: 'Ponjavic Lab, Leeds',
     },
     {
-      name: 'Double-helix PSF microscope',
+      name: 'Double-helix-based 3D SMLM microscope',
       text: 'Single-molecule localisation in 3D, with a longer depth range than astigmatic approaches.',
       place: 'Ponjavic Lab, Leeds',
     },
