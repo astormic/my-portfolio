@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { formatMonth, isoDay } from '../lib/dates';
+import background from '../assets/bg-nuclei.jpg';
 
 const cards = await Promise.all(
   (await getCollection('news'))
@@ -23,7 +24,7 @@ const filters = [
 ].filter((filter) => cards.some((card) => card.category === filter.id));
 ---
 
-<Base bare heading="News" intro="Conferences, public engagement and the occasional note."
+<Base bare background={background} heading="News" intro="Conferences, public engagement and the occasional note."
   title="News"
   description="Conferences, public engagement and notes from Amir Rahmani."
 >

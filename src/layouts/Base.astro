@@ -5,7 +5,7 @@ import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import defaultBackground from '../assets/bg-cell-1.png';
+import defaultBackground from '../assets/bg-cell-2.png';
 import { site } from '../site.config';
 import { href } from '../lib/url';
 
@@ -31,7 +31,7 @@ const {
   bare = false,
 } = Astro.props;
 
-const pageTitle = title ? `${title} | ${site.name}` : site.name;
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.brand}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const backdrop = await getImage({ src: background, width: 1600, format: 'webp', quality: 70 });
 ---
@@ -45,7 +45,9 @@ const backdrop = await getImage({ src: background, width: 1600, format: 'webp', 
     <meta name="description" content={description} />
     <meta name="theme-color" content="#08090a" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href={href('/favicon.svg')} />
+    <link rel="icon" href={href('/favicon.ico')} sizes="48x48" />
+    <link rel="icon" type="image/png" href={href('/favicon-32.png')} sizes="32x32" />
+    <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
     <link rel="preload" as="image" href={backdrop.src} fetchpriority="high" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />

@@ -7,7 +7,8 @@ import { href } from '../lib/url';
 import background from '../assets/bg-cell-1.png';
 import cellImage from '../assets/bg-cell-2.png';
 import trackingImage from '../assets/particle-tracking.png';
-import objectiveImage from '../assets/cold-objective.jpg';
+import tableImage from '../assets/optical-table.jpg';
+import logo from '../assets/logo.png';
 
 // Positions held now, shown beside the bio.
 const current = site.experience.filter((row) => row.years.endsWith('to now'));
@@ -17,7 +18,7 @@ const current = site.experience.filter((row) => row.years.endsWith('to now'));
 const focus = [
   { title: 'Sub-zero live-cell super-resolution imaging', image: cellImage },
   { title: 'Single-molecule imaging and tracking', image: trackingImage },
-  { title: 'Optical system development', image: objectiveImage },
+  { title: 'Optical system development', image: tableImage },
 ];
 
 const sections = [
@@ -127,6 +128,20 @@ const sections = [
             <li class="border border-rule bg-white/5 px-3 py-1.5 text-[0.95rem]">{skill}</li>
           ))}
         </ul>
+      </section>
+    )
+  }
+
+  {
+    site.brandMeaning.length > 0 && (
+      <section class="panel mt-6 grid items-center gap-6 p-6 sm:grid-cols-[9rem_1fr] sm:p-8">
+        <Image src={logo} alt={`The ${site.brand} logo`} width={256} height={256} class="size-28 rounded-full ring-1 ring-white/25 sm:size-36" />
+        <div>
+          <h2 class="section-title">About {site.brand}</h2>
+          <div class="copy text-ink/90">
+            {site.brandMeaning.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </div>
       </section>
     )
   }

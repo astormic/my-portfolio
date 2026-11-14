@@ -2,6 +2,13 @@
 
 export const site = {
   name: 'Amir Rahmani',
+  // Shown with the logo at the top of every page.
+  brand: 'Zarrenama',
+  // Shown at the end of the home page, under "About Zarrenama".
+  brandMeaning: [
+    'Zarrenama (ذره‌نما) is a Persian word. Zarre is a particle: the old word for the specks of dust you see drifting in a beam of sunlight. Nama means "that which shows". Together it reads as "the particle-revealer", something that makes the very small visible, which is what a microscope does.',
+    'The logo is traced from one of my own fluorescence images of cells.',
+  ],
   role: 'Postdoctoral Research Associate, University of Cambridge',
   description:
     'Amir Rahmani: Researcher at the University of Cambridge. Research, news, reading and listening.',

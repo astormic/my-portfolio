@@ -4,4 +4,5 @@ date: 2019-12-01
 kind: 'project'
 period: 'Dec 2019 to May 2020'
 place: 'ICFO, Barcelona'
+image: ./lamin-nuclei.jpg
 ---

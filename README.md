@@ -122,7 +122,7 @@ rebuild stops, push any change or re-enable it from the Actions tab.
 ├── tsconfig.json
 ├── public/                        Copied to the site as-is
 │   ├── cv.pdf
-│   ├── favicon.svg
+│   ├── favicon.ico, favicon-32.png, apple-touch-icon.png
 │   └── papers/
 │       └── example-paper.pdf
 └── src/

@@ -4,6 +4,7 @@ date: 2023-10-01
 kind: 'Note'
 category: note
 place: 'Leeds, UK'
+image: ./building-microscopes.jpg
 ---
 
 Commercial microscopes are optimised for robustness and reproducibility, and they are excellent for well-defined questions on well-behaved samples. The moment your sample or your question sits at the edge of what the instrument was designed for (flowing cells, sub-zero temperatures, nanometre-precision focus over long timescales), you are fighting the machine rather than using it.
