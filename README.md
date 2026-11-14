@@ -68,6 +68,7 @@ author: Author Name
 rating: 4.5              # optional: 0 to 5, half stars allowed
 cover: ./covers/my-book.jpg  # optional: a photo or cover image
 read: 2026-10-01         # optional, used for ordering
+reading: true            # optional: shows it under "Currently reading"
 link: https://...        # optional
 ```
 

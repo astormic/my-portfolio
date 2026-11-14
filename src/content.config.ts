@@ -63,6 +63,8 @@ const books = defineCollection({
       title: z.string(),
       author: z.string(),
       rating: z.number().min(0).max(5).multipleOf(0.5).optional(),
+      // true while you are still reading it: shown under "Currently reading".
+      reading: z.boolean().default(false),
       // A photo of the book or its cover. Without one, a plain title card is shown.
       cover: image().optional(),
       read: z.coerce.date().optional(),
