@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 540" width="360" height="540">
+  <rect width="360" height="540" fill="#3d5a45"/>
+  <rect x="36" y="60" width="56" height="4" fill="#eaf2e6"/>
+  <text x="36" y="130" font-family="Georgia, 'Times New Roman', serif" font-size="38" fill="#eaf2e6"><tspan x="36" dy="0">On the Origin</tspan><tspan x="36" dy="44">of Species</tspan></text>
+  <text x="36" y="486" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#eaf2e6" opacity="0.8">Charles Darwin</text>
+</svg>

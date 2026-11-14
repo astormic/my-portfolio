@@ -1,0 +1,18 @@
+---
+// One dated row: the date hangs in the left margin, content sits on the right.
+// Used for the CV on the home page and the lists on Research and Outreach.
+interface Props {
+  when: string;
+  datetime?: string;
+}
+const { when, datetime } = Astro.props;
+---
+
+<li class="grid gap-x-8 gap-y-1 border-t border-rule py-5 sm:grid-cols-[8.5rem_1fr]">
+  <p class="text-sm leading-[1.7rem] text-muted tabular-nums">
+    {datetime ? <time datetime={datetime}>{when}</time> : when}
+  </p>
+  <div class="min-w-0">
+    <slot />
+  </div>
+</li>

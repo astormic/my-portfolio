@@ -1,0 +1,19 @@
+---
+import { site } from '../site.config';
+import { href } from '../lib/url';
+---
+
+<footer class="mx-auto mt-24 max-w-4xl px-5 pb-12 sm:px-8">
+  <div class="flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-rule pt-6 text-sm text-muted">
+    <p>© {new Date().getFullYear()} {site.name}</p>
+    <ul class="flex flex-wrap gap-x-5 gap-y-1">
+      {
+        site.links.map((link) => (
+          <li>
+            <a href={href(link.href)}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>

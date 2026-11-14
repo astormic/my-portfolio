@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageTitle from '../components/PageTitle.astro';
+import Entry from '../components/Entry.astro';
+import { formatMonth, isoDay } from '../lib/dates';
+
+const entries = await Promise.all(
+  (await getCollection('outreach'))
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .map(async (entry) => ({
+      ...entry.data,
+      Body: (await render(entry)).Content,
+    })),
+);
+---
+
+<Base
+  title="Outreach"
+  description="Talks, workshops and writing for audiences outside the lab."
+>
+  <PageTitle
+    title="Outreach"
+    intro="Talks, workshops and writing for people outside the lab."
+  />
+
+  {
+    entries.length > 0 ? (
+      <ul class="border-b border-rule">
+        {entries.map((item) => (
+          <Entry when={formatMonth(item.date)} datetime={isoDay(item.date)}>
+            <h2 class="max-w-[60ch] text-lg font-[650]">{item.title}</h2>
+            <p class="mt-1 text-muted">
+              {item.kind}
+              {item.place && `, ${item.place}`}
+            </p>
+            <div class="copy mt-3">
+              <item.Body />
+            </div>
+            {item.link && (
+              <p class="mt-3 text-sm">
+                <a class="action" href={item.link}>
+                  See more
+                </a>
+              </p>
+            )}
+          </Entry>
+        ))}
+      </ul>
+    ) : (
+      <p class="text-muted">
+        Nothing here yet. Add a Markdown file to src/content/outreach/.
+      </p>
+    )
+  }
+</Base>

@@ -1,0 +1,14 @@
+---
+// Page heading with a short scale bar beneath it, as on a micrograph.
+interface Props {
+  title: string;
+  intro?: string;
+}
+const { title, intro } = Astro.props;
+---
+
+<div class="mb-12 sm:mb-16">
+  <h1 class="text-4xl font-[700] tracking-tight sm:text-5xl">{title}</h1>
+  <div class="mt-5 h-[3px] w-14 bg-accent" aria-hidden="true"></div>
+  {intro && <p class="mt-6 max-w-[60ch] text-lg text-muted">{intro}</p>}
+</div>

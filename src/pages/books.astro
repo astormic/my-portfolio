@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageTitle from '../components/PageTitle.astro';
+import Stars from '../components/Stars.astro';
+
+// Most recently read first; books without a date go last, by title.
+const books = (await getCollection('books')).sort((a, b) => {
+  const diff = (b.data.read?.getTime() ?? 0) - (a.data.read?.getTime() ?? 0);
+  return diff || a.data.title.localeCompare(b.data.title);
+});
+---
+
+<Base title="Books" description="Books I have read, with my ratings.">
+  <PageTitle title="Books" intro="What I have been reading, and what I made of it." />
+
+  {
+    books.length > 0 ? (
+      <ul class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4">
+        {books.map(({ data }) => (
+          <li>
+            <Image
+              src={data.cover}
+              alt={`Cover of ${data.title}`}
+              width={360}
+              height={540}
+              loading="lazy"
+              class="aspect-[2/3] w-full rounded-[3px] border border-rule object-cover"
+            />
+            <h2 class="mt-3 leading-snug font-[650]">
+              {data.link ? <a href={data.link}>{data.title}</a> : data.title}
+            </h2>
+            <p class="text-sm text-muted">{data.author}</p>
+            <p class="mt-1.5">
+              <Stars rating={data.rating} />
+            </p>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="text-muted">
+        Nothing here yet. Add a YAML file to src/content/books/.
+      </p>
+    )
+  }
+</Base>

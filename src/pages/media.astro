@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import PageTitle from '../components/PageTitle.astro';
+import Stars from '../components/Stars.astro';
+import { site } from '../site.config';
+import { getLatestFilms } from '../lib/letterboxd';
+import { formatDay, isoDay } from '../lib/dates';
+
+const { spotifyPlaylistId, letterboxdUsername, filmCount } = site.media;
+
+const { films, error } = letterboxdUsername
+  ? await getLatestFilms(letterboxdUsername, filmCount)
+  : { films: [], error: null };
+
+const profile = `https://letterboxd.com/${letterboxdUsername}/`;
+const builtOn = new Date();
+---
+
+<Base title="Media" description="What I am listening to and watching.">
+  <PageTitle title="Media" intro="What I am listening to and watching." />
+
+  {
+    spotifyPlaylistId && (
+      <section>
+        <h2 class="mb-4 text-xl font-[650]">Listening</h2>
+        <iframe
+          title="Spotify playlist"
+          src={`https://open.spotify.com/embed/playlist/${spotifyPlaylistId}`}
+          width="100%"
+          height="352"
+          loading="lazy"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          class="block rounded-xl border-0 bg-rule"
+        />
+      </section>
+    )
+  }
+
+  <section class="mt-16 sm:mt-20">
+    <div class="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      <h2 class="text-xl font-[650]">Recently watched</h2>
+      {
+        letterboxdUsername && (
+          <a class="text-sm text-muted" href={profile}>
+            All my ratings on Letterboxd
+          </a>
+        )
+      }
+    </div>
+
+    {
+      !letterboxdUsername && (
+        <p class="max-w-[60ch] text-muted">
+          No Letterboxd account is set. Add your username to
+          src/site.config.ts and your latest ratings will appear here.
+        </p>
+      )
+    }
+
+    {
+      letterboxdUsername && films.length === 0 && (
+        <p class="max-w-[60ch] text-muted">
+          {error
+            ? 'Letterboxd could not be reached when this page was last built. '
+            : 'No films logged yet. '}
+          <a href={profile}>Open my Letterboxd profile</a>.
+        </p>
+      )
+    }
+
+    {
+      films.length > 0 && (
+        <>
+          <ul class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4">
+            {films.map((film) => (
+              <li>
+                <a href={film.link} class="block no-underline">
+                  {film.poster ? (
+                    <img
+                      src={film.poster}
+                      alt={`Poster for ${film.title}`}
+                      width="360"
+                      height="540"
+                      loading="lazy"
+                      decoding="async"
+                      referrerpolicy="no-referrer"
+                      class="aspect-[2/3] w-full rounded-[3px] border border-rule bg-rule object-cover"
+                    />
+                  ) : (
+                    <div class="aspect-[2/3] w-full rounded-[3px] border border-rule bg-rule" />
+                  )}
+                  <h3 class="mt-3 leading-snug font-[650]">
+                    {film.title}
+                    {film.year && (
+                      <span class="font-normal text-muted"> ({film.year})</span>
+                    )}
+                  </h3>
+                </a>
+                <p class="mt-1.5">
+                  {film.rating !== null ? (
+                    <Stars rating={film.rating} />
+                  ) : (
+                    <span class="text-sm text-muted">Not rated</span>
+                  )}
+                </p>
+                {film.watched && (
+                  <p class="mt-1 text-sm text-muted">
+                    {film.rewatch ? 'Rewatched ' : 'Watched '}
+                    <time datetime={isoDay(film.watched)}>
+                      {formatDay(film.watched)}
+                    </time>
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-10 text-sm text-muted">
+            Updated <time datetime={isoDay(builtOn)}>{formatDay(builtOn)}</time> from
+            my Letterboxd feed.
+          </p>
+        </>
+      )
+    }
+  </section>
+</Base>

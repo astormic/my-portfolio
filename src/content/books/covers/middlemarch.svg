@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 540" width="360" height="540">
+  <rect width="360" height="540" fill="#7a3b46"/>
+  <rect x="36" y="60" width="56" height="4" fill="#f7e8ea"/>
+  <text x="36" y="130" font-family="Georgia, 'Times New Roman', serif" font-size="38" fill="#f7e8ea"><tspan x="36" dy="0">Middlemarch</tspan></text>
+  <text x="36" y="486" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f7e8ea" opacity="0.8">George Eliot</text>
+</svg>
