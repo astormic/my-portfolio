@@ -1,6 +1,6 @@
 ---
 title: 'Developing high-NA oblique plane microscopy'
-date: 2024-12-01
+date: 2023-05-01 # not shown; places this card just below single-molecule imaging flow cytometry
 kind: 'project'
 period: ''
 image: ./high-na-opm-setup.jpg
