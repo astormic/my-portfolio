@@ -103,6 +103,28 @@ export const site = {
     },
   ],
 
+  // Shown on the home page under "Service and leadership", newest first.
+  service: [
+    {
+      years: '2026 to now',
+      title: 'Ambassador',
+      place: 'Physics of Life Network (PoLNET)',
+      note: '',
+    },
+    {
+      years: '2028',
+      title: 'Co-chair',
+      place: 'Gordon Research Seminar on Image Science',
+      note: '',
+    },
+    {
+      years: '2025 to now',
+      title: 'Department Officer',
+      place: 'Postdocs of Cambridge Society, University of Cambridge',
+      note: '',
+    },
+  ],
+
   awards: [
     {
       years: '2024',
