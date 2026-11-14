@@ -2,8 +2,8 @@
 title: 'Dynamic live cell imaging at sub-zero temperatures'
 date: 2025-03-01
 kind: 'project'
-period: 'Mar 2025 to now'
-place: 'Kaminski Group, University of Cambridge, with the British Antarctic Survey'
+period: 'Mar 2025 - Present'
+place: 'Kaminski Group, University of Cambridge, with the British Antarctic Survey, Cambridge, UK'
 image: ./cold-imaging-objective.jpg
 ---
 

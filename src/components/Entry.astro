@@ -8,8 +8,8 @@ interface Props {
 const { when, datetime } = Astro.props;
 ---
 
-<li class="grid gap-x-8 gap-y-1 border-t border-rule py-5 sm:grid-cols-[8.5rem_1fr]">
-  <p class="text-sm leading-[1.7rem] text-muted tabular-nums">
+<li class="grid gap-x-8 gap-y-1 border-t border-rule py-5 sm:grid-cols-[11.5rem_1fr]">
+  <p class="text-sm leading-[1.7rem] text-muted tabular-nums sm:whitespace-nowrap">
     {datetime ? <time datetime={datetime}>{when}</time> : when}
   </p>
   <div class="min-w-0">

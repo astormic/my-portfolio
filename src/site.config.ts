@@ -36,31 +36,31 @@ export const site = {
 
   experience: [
     {
-      years: 'Mar 2025 to now',
+      years: 'Mar 2025 - Present',
       title: 'Postdoctoral Research Associate',
-      place: 'University of Cambridge',
+      place: 'University of Cambridge, Cambridge, UK',
       note: '',
     },
     {
-      years: 'Oct 2025 to now',
+      years: 'Oct 2025 - Present',
       title: 'College Research Associate',
-      place: 'Wolfson College, Cambridge',
+      place: 'Wolfson College, University of Cambridge, Cambridge, UK',
       note: '',
     },
     {
-      years: 'Mar 2025 to now',
+      years: 'Mar 2025 - Present',
       title: 'Visiting Researcher',
-      place: 'British Antarctic Survey, Cambridge',
+      place: 'British Antarctic Survey, Cambridge, UK',
       note: '',
     },
     {
-      years: 'Dec 2019 to May 2020',
+      years: 'Dec 2019 - May 2020',
       title: 'Visiting Researcher',
       place: 'ICFO, Barcelona, Spain',
       note: '',
     },
     {
-      years: 'Jul 2018 to Jul 2019',
+      years: 'Jul 2018 - Jul 2019',
       title: 'Student',
       place: 'Ries Lab, EMBL, Heidelberg, Germany',
       note: '',
@@ -69,36 +69,36 @@ export const site = {
 
   education: [
     {
-      years: 'Oct 2022 to Nov 2025',
+      years: 'Oct 2022 - Nov 2025',
       title: 'PhD, Physics',
-      place: 'University of Leeds',
+      place: 'University of Leeds, Leeds, UK',
       note: '',
     },
     {
-      years: 'Sep 2021 to Sep 2022',
+      years: 'Sep 2021 - Sep 2022',
       title: 'MSc, Physics',
-      place: "King's College London",
+      place: "King's College London, London, UK",
       note: '',
     },
   ],
 
   teaching: [
     {
-      years: '2025 to 2026',
+      years: '2025 - 2026',
       title: 'Teaching Assistant, Computational Skills: Python',
-      place: 'University of Cambridge',
+      place: 'University of Cambridge, Cambridge, UK',
       note: '',
     },
     {
-      years: '2022 to 2024',
+      years: '2022 - 2024',
       title: 'Teaching Assistant, Computational Skills: Python',
-      place: 'University of Leeds',
+      place: 'University of Leeds, Leeds, UK',
       note: '',
     },
     {
-      years: '2022 to 2024',
+      years: '2022 - 2024',
       title: 'Teaching Assistant, Introduction to Experimental Physics',
-      place: 'University of Leeds',
+      place: 'University of Leeds, Leeds, UK',
       note: '',
     },
   ],
@@ -106,9 +106,9 @@ export const site = {
   // Shown on the home page under "Service and leadership", newest first.
   service: [
     {
-      years: '2026 to now',
+      years: '2026 - Present',
       title: 'Ambassador',
-      place: 'Physics of Life Network (PoLNET)',
+      place: 'Physics of Life Network (PoLNET), UK',
       note: '',
     },
     {
@@ -118,9 +118,9 @@ export const site = {
       note: '',
     },
     {
-      years: '2025 to now',
+      years: '2025 - Present',
       title: 'Department Officer',
-      place: 'Postdocs of Cambridge Society, University of Cambridge',
+      place: 'Postdocs of Cambridge Society, University of Cambridge, Cambridge, UK',
       note: '',
     },
   ],
@@ -141,7 +141,7 @@ export const site = {
     {
       years: '2019',
       title: 'Student Research Fellowship',
-      place: 'ICFO, Spain',
+      place: 'ICFO, Barcelona, Spain',
       note: '',
     },
     {
@@ -154,16 +154,16 @@ export const site = {
 
   supervision: [
     {
-      years: '2025-2026',
+      years: '2025 - 2026',
       title: 'Transformer-based single-particle tracking analysis',
-      place: 'Frederick Lawrence, MPhil DIS, Department of Physics, University of Cambridge',
-      note: '',
+      place: 'Frederick Lawrence',
+      note: 'MPhil in Data Intensive Science (DIS), Department of Physics, University of Cambridge',
     },
     {
-      years: '2025-2026',
+      years: '2025 - 2026',
       title: 'Characterisation of membrane bilayer models at cold using solvatochromic dyes',
-      place: 'Shonit Sharma and Boyd Lyons, Part IIB, Department of Chemical Engineering and Biotechnology, University of Cambridge',
-      note: '',
+      place: 'Shonit Sharma and Boyd Lyons',
+      note: 'Part IIB, Department of Chemical Engineering and Biotechnology, University of Cambridge',
     },
   ],
 
@@ -171,22 +171,22 @@ export const site = {
     {
       name: 'High-NA oblique plane microscope',
       text: 'Oblique plane microscopy integrated with microfluidics, for counting individual molecules on flowing cells.',
-      place: 'Ponjavic Lab, Leeds',
+      place: 'Ponjavic Lab, University of Leeds, Leeds, UK',
     },
     {
       name: 'PiFocus',
       text: 'Astigmatism-based focus stabilisation with better than 10 nm axial precision over more than 10 µm.',
-      place: 'Ponjavic Lab, Leeds',
+      place: 'Ponjavic Lab, University of Leeds, Leeds, UK',
     },
     {
       name: 'Double-helix-based 3D SMLM microscope',
       text: 'Single-molecule localisation in 3D, with a longer depth range than astigmatic approaches.',
-      place: 'Ponjavic Lab, Leeds',
+      place: 'Ponjavic Lab, University of Leeds, Leeds, UK',
     },
     {
       name: 'Dual-channel localisation microscope',
       text: 'Two-colour single-molecule localisation, built to study the stoichiometry and spatial organisation of protein complexes.',
-      place: 'Ries Lab, EMBL Heidelberg',
+      place: 'Ries Lab, EMBL, Heidelberg, Germany',
     },
   ],
 
