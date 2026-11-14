@@ -1,30 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Entry from '../components/Entry.astro';
 import { site } from '../site.config';
 import { href } from '../lib/url';
-import { formatMonth } from '../lib/dates';
-
-const year = (d: Date) => d.getUTCFullYear();
 
 // Positions held now, shown beside the bio.
 const current = site.experience.filter((row) => row.years.endsWith('to now'));
-
-// The three newest publications and news cards, as a preview.
-const publications = (await getCollection('research'))
-  .filter((entry) => entry.data.kind === 'publication')
-  .sort(
-    (a, b) =>
-      year(b.data.date) - year(a.data.date) ||
-      a.data.order - b.data.order ||
-      b.data.date.getTime() - a.data.date.getTime(),
-  )
-  .slice(0, 3);
-
-const news = (await getCollection('news'))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
 
 const sections = [
   { heading: 'Experience', rows: site.experience },
@@ -80,67 +61,11 @@ const sections = [
     }
   </div>
 
-  <div class="grid gap-x-12 gap-y-14 lg:grid-cols-2">
-    {
-      publications.length > 0 && (
-        <section>
-          <div class="flex items-baseline justify-between gap-4">
-            <h2 class="section-title">Recent publications</h2>
-            <a class="action text-sm whitespace-nowrap" href={href('/research/')}>
-              All research
-            </a>
-          </div>
-          <ul class="border-b border-rule">
-            {publications.map(({ data }) => (
-              <li class="border-t border-rule py-4 leading-snug">
-                {data.link ? (
-                  <a class="font-medium" href={data.link}>
-                    {data.title}
-                  </a>
-                ) : (
-                  <span class="font-medium">{data.title}</span>
-                )}
-                <span class="mt-1 block text-sm text-muted">
-                  {data.status ? `${data.status}, ` : ''}
-                  {data.venue && <em>{data.venue}</em>} ({year(data.date)})
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      news.length > 0 && (
-        <section>
-          <div class="flex items-baseline justify-between gap-4">
-            <h2 class="section-title">Latest news</h2>
-            <a class="action text-sm whitespace-nowrap" href={href('/news/')}>
-              All news
-            </a>
-          </div>
-          <ul class="border-b border-rule">
-            {news.map(({ data }) => (
-              <li class="border-t border-rule py-4 leading-snug">
-                <span class="font-medium">{data.title}</span>
-                <span class="mt-1 block text-sm text-muted">
-                  {data.kind}, {data.when ?? formatMonth(data.date)}
-                  {data.place && `, ${data.place}`}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-  </div>
-
   {
     sections.map(
       (section) =>
         section.rows.length > 0 && (
-          <section class="mt-16 sm:mt-20">
+          <section class="mt-16 first:mt-0 sm:mt-20 sm:first:mt-0">
             <h2 class="section-title">{section.heading}</h2>
             <ul class="border-b border-rule">
               {section.rows.map((row) => (
