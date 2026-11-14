@@ -1,26 +1,27 @@
 @import 'tailwindcss';
 
-/* Design tokens. Change the five colours here to re-theme the whole site.
-   The accent is haematoxylin violet, the stain behind most tissue slides. */
+/* Design tokens. Change the colours here to re-theme the whole site. */
 @theme {
-  --font-sans: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui,
-    sans-serif;
+  --font-sans: 'IBM Plex Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Source Serif 4 Variable', ui-serif, Georgia, serif;
 
   --color-paper: #ffffff;
-  --color-ink: #1c1b22;
-  --color-muted: #625f6e;
-  --color-rule: #e4e2ea;
-  --color-accent: #54399a;
+  --color-surface: #f4f6f8;
+  --color-ink: #17202b;
+  --color-muted: #586574;
+  --color-rule: #dde3e9;
+  --color-accent: #0b5d7a;
 }
 
 @layer base {
   @media (prefers-color-scheme: dark) {
     :root {
-      --color-paper: #14131a;
-      --color-ink: #eceaf2;
-      --color-muted: #a29eb0;
-      --color-rule: #2e2c38;
-      --color-accent: #b8a4f2;
+      --color-paper: #0f1419;
+      --color-surface: #161d25;
+      --color-ink: #e6ebf0;
+      --color-muted: #9aa7b4;
+      --color-rule: #27313c;
+      --color-accent: #6cc7dc;
     }
   }
 
@@ -29,16 +30,22 @@
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 106.25%;
     line-height: 1.6;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   h1,
   h2,
   h3 {
-    line-height: 1.2;
+    line-height: 1.25;
     text-wrap: balance;
   }
 
@@ -49,7 +56,7 @@
   a {
     text-decoration-line: underline;
     text-decoration-color: var(--color-rule);
-    text-decoration-thickness: 0.09em;
+    text-decoration-thickness: 0.08em;
     text-underline-offset: 0.2em;
   }
 
@@ -70,6 +77,15 @@
 }
 
 @layer components {
+  /* Section headings inside a page, e.g. "Experience". */
+  .section-title {
+    margin-bottom: 1rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
   /* Body text rendered from Markdown files. */
   .copy {
     max-width: 65ch;
@@ -85,6 +101,9 @@
     list-style: decimal;
     padding-left: 1.2em;
   }
+  .copy li + li {
+    margin-top: 0.25em;
+  }
   .copy em {
     font-style: italic;
   }
@@ -92,10 +111,10 @@
     font-size: 0.88em;
   }
   .copy strong {
-    font-weight: 650;
+    font-weight: 600;
   }
 
-  /* Small action links such as "PDF" and "Project page". */
+  /* Small action links such as "Read the paper". */
   .action {
     font-weight: 600;
     color: var(--color-accent);
@@ -104,5 +123,29 @@
       var(--color-accent) 35%,
       transparent
     );
+  }
+
+  /* Outlined buttons, used for the profile links on the home page. */
+  .button {
+    display: inline-block;
+    border: 1px solid var(--color-rule);
+    border-radius: 6px;
+    background: var(--color-paper);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .button:hover {
+    border-color: var(--color-accent);
+  }
+  .button-primary {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+  .button-primary:hover {
+    color: var(--color-paper);
+    filter: brightness(1.1);
   }
 }

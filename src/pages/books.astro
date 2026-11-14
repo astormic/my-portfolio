@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import PageTitle from '../components/PageTitle.astro';
 import Stars from '../components/Stars.astro';
 
 // Most recently read first; books without a date go last, by title.
@@ -12,8 +11,7 @@ const books = (await getCollection('books')).sort((a, b) => {
 });
 ---
 
-<Base title="Books" description="Books I have read, with my ratings.">
-  <PageTitle title="Books" intro="What I have been reading, and what I made of it." />
+<Base heading="Books" intro="What I have been reading, and what I made of it." title="Books" description="Books I have read, with my ratings.">
 
   {
     books.length > 0 ? (

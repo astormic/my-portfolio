@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import PageTitle from '../components/PageTitle.astro';
 import Entry from '../components/Entry.astro';
 import { href, isExternal } from '../lib/url';
 import { site } from '../site.config';
@@ -45,19 +44,15 @@ const projects = await Promise.all(
 const sharedFirst = publications.some((paper) => paper.authors?.includes('†'));
 ---
 
-<Base
+<Base heading="Research" intro="What I am working on now, and what has been published so far."
   title="Research"
   description="Research projects and publications by Amir Rahmani."
 >
-  <PageTitle
-    title="Research"
-    intro="What I am working on now, and what has been published so far."
-  />
 
   {
     projects.length > 0 && (
       <section>
-        <h2 class="mb-4 text-xl font-[650]">Projects</h2>
+        <h2 class="section-title">Projects</h2>
         <ul class="border-b border-rule">
           {projects.map((project) => (
             <Entry
@@ -112,7 +107,7 @@ const sharedFirst = publications.some((paper) => paper.authors?.includes('†'))
   {
     site.instruments.length > 0 && (
       <section class="mt-16 sm:mt-20">
-        <h2 class="mb-4 text-xl font-[650]">Microscopes I have built</h2>
+        <h2 class="section-title">Microscopes I have built</h2>
         <ul class="grid gap-x-10 border-t border-rule sm:grid-cols-2">
           {site.instruments.map((item) => (
             <li class="border-b border-rule py-5">
@@ -129,7 +124,7 @@ const sharedFirst = publications.some((paper) => paper.authors?.includes('†'))
   {
     publications.length > 0 && (
       <section class="mt-16 sm:mt-20">
-        <h2 class="mb-4 text-xl font-[650]">Publications</h2>
+        <h2 class="section-title">Publications</h2>
         <ul class="border-b border-rule">
           {publications.map((paper) => (
             <Entry when={String(year(paper.date))} datetime={String(year(paper.date))}>

@@ -31,7 +31,7 @@ npm run preview    # serves dist/ to check the build
 | Paper PDFs | drop them in `public/papers/` |
 | News cards | one `.md` file each in `src/content/news/` |
 | Books | one `.yaml` file each in `src/content/books/`, cover in `covers/` |
-| Colours and font | the `@theme` block in `src/styles/global.css` |
+| Colours and fonts | the `@theme` block in `src/styles/global.css` |
 
 Everything in the repository now is example content. Delete the example files
 once you have added your own.
@@ -130,7 +130,6 @@ rebuild stops, push any change or re-enable it from the Actions tab.
     │   ├── Entry.astro            A dated row (CV, research)
     │   ├── Footer.astro
     │   ├── Header.astro
-    │   ├── PageTitle.astro
     │   └── Stars.astro            Star rating, supports halves
     ├── content/
     │   ├── books/                 One .yaml per book

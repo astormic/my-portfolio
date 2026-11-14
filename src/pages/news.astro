@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import PageTitle from '../components/PageTitle.astro';
 import { formatMonth, isoDay } from '../lib/dates';
 
 const cards = await Promise.all(
@@ -24,14 +23,10 @@ const filters = [
 ].filter((filter) => cards.some((card) => card.category === filter.id));
 ---
 
-<Base
+<Base heading="News" intro="Conferences, public engagement and the occasional note."
   title="News"
   description="Conferences, public engagement and notes from Amir Rahmani."
 >
-  <PageTitle
-    title="News"
-    intro="Conferences, public engagement and the occasional note."
-  />
 
   {
     cards.length > 0 ? (

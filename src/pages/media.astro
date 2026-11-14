@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageTitle from '../components/PageTitle.astro';
 import Stars from '../components/Stars.astro';
 import { site } from '../site.config';
 import { getLatestFilms } from '../lib/letterboxd';
@@ -16,13 +15,12 @@ const profile = `https://letterboxd.com/${letterboxdUsername}/`;
 const builtOn = new Date();
 ---
 
-<Base title="Media" description="What I am listening to and watching.">
-  <PageTitle title="Media" intro="What I am listening to and watching." />
+<Base heading="Media" intro="What I am listening to and watching." title="Media" description="What I am listening to and watching.">
 
   {
     spotifyPlaylistId && (
       <section>
-        <h2 class="mb-4 text-xl font-[650]">Listening</h2>
+        <h2 class="section-title">Listening</h2>
         <iframe
           title="Spotify playlist"
           src={`https://open.spotify.com/embed/playlist/${spotifyPlaylistId}`}
