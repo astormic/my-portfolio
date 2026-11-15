@@ -10,6 +10,7 @@ const cards = await Promise.all(
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
     .map(async (entry) => ({
       ...entry.data,
+      id: entry.id,
       hasBody: Boolean(entry.body?.trim()),
       Body: (await render(entry)).Content,
     })),
@@ -17,21 +18,28 @@ const cards = await Promise.all(
 
 // Filter buttons, shown only for categories that have at least one card.
 const filters = [
-  { id: 'conference', label: 'Conferences' },
+  { id: 'research', label: 'Research' },
+  { id: 'conference', label: 'Conferences and talks' },
   { id: 'public', label: 'Public engagement' },
   { id: 'award', label: 'Awards' },
   { id: 'note', label: 'Notes' },
 ].filter((filter) => cards.some((card) => card.category === filter.id));
+
+const embedUrl = (urn: string) =>
+  `https://www.linkedin.com/embed/feed/update/urn:li:${urn.replace(/^urn:li:/, '')}`;
 ---
 
-<Base bare background={background} heading="News" intro="Conferences, public engagement and the occasional note."
+<Base
+  bare
+  background={background}
+  heading="News"
+  intro="Research, conferences, public engagement and the occasional note."
   title="News"
-  description="Conferences, public engagement and notes from Amir Rahmani."
+  description="Research news, conferences, public engagement and notes from Amir Rahmani."
 >
-
   {
     cards.length > 0 ? (
-      <>
+      <div class="mx-auto max-w-2xl">
         {filters.length > 1 && (
           <div class="mb-8 flex flex-wrap gap-2" role="group" aria-label="Show">
             <button class="filter" data-filter="all" aria-pressed="true">
@@ -45,55 +53,78 @@ const filters = [
           </div>
         )}
 
-        <ul id="cards" class="grid items-start gap-5 md:grid-cols-2">
+        <ol id="cards" class="space-y-8">
           {cards.map((card) => (
-            <li
-              data-category={card.category}
-              class="panel flex flex-col overflow-hidden"
-            >
+            <li data-category={card.category} class="panel overflow-hidden">
               {card.image && (
                 <Image
                   src={card.image}
                   alt=""
-                  width={720}
-                  height={card.image.height > card.image.width ? 540 : 405}
-                  position={card.image.height > card.image.width ? 'top' : 'centre'}
+                  width={1344}
                   loading="lazy"
-                  class:list={[
-                    'w-full object-cover',
-                    // Portrait photos get a taller frame, cropped from the top.
-                    card.image.height > card.image.width
-                      ? 'aspect-[4/3] object-[center_12%]'
-                      : 'aspect-video',
-                  ]}
+                  class="max-h-[40rem] w-full object-cover object-top"
                 />
               )}
-              <div class="flex grow flex-col p-5 sm:p-6">
+
+              <div class="p-6 sm:p-8">
                 <p class="text-sm text-muted tabular-nums">
                   {card.when ?? (
                     <time datetime={isoDay(card.date)}>{formatMonth(card.date)}</time>
                   )}
-                  {card.place && `, ${card.place}`}
+                  {card.place && ` - ${card.place}`}
                 </p>
-                <h2 class="mt-2 text-lg leading-snug font-medium">{card.title}</h2>
-                <p class="mt-1 text-sm font-medium text-accent">{card.kind}</p>
+                <h2 class="mt-2 text-2xl leading-snug font-normal">{card.title}</h2>
+                <p class="mt-1 text-sm tracking-wide text-accent">{card.kind}</p>
+
                 {card.hasBody && (
-                  <div class="copy mt-3 text-[0.95rem]">
+                  <div class="copy mt-4 text-ink/90">
                     <card.Body />
                   </div>
                 )}
+
                 {card.link && (
-                  <p class="mt-auto pt-4 text-sm">
+                  <p class="mt-4 text-sm">
                     <a class="action" href={card.link}>
-                      {card.link.includes('linkedin.com') ? 'Post on LinkedIn' : 'See more'}
+                      {card.category === 'research' && card.link.includes('doi.org')
+                        ? 'Read the paper'
+                        : 'See more'}
                     </a>
                   </p>
                 )}
+
+                {card.linkedin &&
+                  (card.image ? (
+                    <details class="linkedin mt-6 border-t border-rule pt-4">
+                      <summary class="w-fit cursor-pointer text-sm text-muted hover:text-accent">
+                        <span class="closed">Show the LinkedIn post</span>
+                        <span class="opened">Hide the LinkedIn post</span>
+                      </summary>
+                      <div class="embed mt-4">
+                        <iframe
+                          src={embedUrl(card.linkedin)}
+                          height={card.linkedinHeight}
+                          title={`LinkedIn post: ${card.title}`}
+                          loading="lazy"
+                          allowfullscreen
+                        />
+                      </div>
+                    </details>
+                  ) : (
+                    <div class="embed mt-6">
+                      <iframe
+                        src={embedUrl(card.linkedin)}
+                        height={card.linkedinHeight}
+                        title={`LinkedIn post: ${card.title}`}
+                        loading="lazy"
+                        allowfullscreen
+                      />
+                    </div>
+                  ))}
               </div>
             </li>
           ))}
-        </ul>
-      </>
+        </ol>
+      </div>
     ) : (
       <p class="text-muted">
         Nothing here yet. Add a Markdown file to src/content/news/.
@@ -110,8 +141,8 @@ const filters = [
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: rgb(0 0 0 / 0.35);
     color: var(--color-muted);
+    background: rgb(0 0 0 / 0.35);
   }
   .filter:hover {
     color: var(--color-accent);
@@ -121,6 +152,28 @@ const filters = [
     background: var(--color-accent);
     border-color: var(--color-accent);
     color: #04110f;
+  }
+
+  /* LinkedIn's embed is a white card; give it a matching white frame. */
+  .embed {
+    margin-inline: auto;
+    max-width: 504px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #fff;
+  }
+  .embed iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+
+  .linkedin .opened,
+  .linkedin[open] .closed {
+    display: none;
+  }
+  .linkedin[open] .opened {
+    display: inline;
   }
 </style>
 

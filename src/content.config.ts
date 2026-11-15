@@ -47,11 +47,16 @@ const news = defineCollection({
       // What you did there, e.g. "Oral presentation" or "Public engagement".
       kind: z.string(),
       // Which filter button the card belongs to.
-      category: z.enum(['conference', 'public', 'award', 'note']),
+      category: z.enum(['research', 'conference', 'public', 'award', 'note']),
       place: z.string().optional(),
       // Optional photo: put the file next to the .md file, e.g. ./photo.jpg
       image: image().optional(),
       link: z.string().url().optional(),
+      // A LinkedIn post to show on the card. Use the part after "urn:li:" in
+      // LinkedIn's "Embed this post" code, e.g. 'share:7491242351655469056'.
+      linkedin: z.string().optional(),
+      // The height LinkedIn's embed code gives for that post, in pixels.
+      linkedinHeight: z.number().default(800),
     }),
 });
 

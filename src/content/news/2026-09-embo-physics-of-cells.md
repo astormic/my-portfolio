@@ -6,6 +6,8 @@ kind: 'Conference'
 category: conference
 place: 'Egmond aan Zee, Netherlands'
 image: ./embo-egmond.jpg
+linkedin: 'ugcPost:7502864546861142016'
+linkedinHeight: 775
 ---
 
 Fantastic first day at EMBO Physics of Cells 2026 in Egmond aan Zee! 🇳🇱🧬
