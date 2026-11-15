@@ -1,0 +1,156 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Entry from '../components/Entry.astro';
+import { href, isExternal } from '../lib/url';
+import { site } from '../site.config';
+import background from '../assets/particle-tracking.png';
+
+// Publications live in src/content/research/ with `kind: publication`.
+const year = (d: Date) => d.getUTCFullYear();
+
+const research = await getCollection('research');
+const projectTitles = new Map(
+  research
+    .filter((entry) => entry.data.kind === 'project')
+    .map((entry) => [entry.id, entry.data.title]),
+);
+
+// Newest year first, then by `order`, then by date.
+const publications = await Promise.all(
+  research
+    .filter((entry) => entry.data.kind === 'publication')
+    .sort(
+      (a, b) =>
+        year(b.data.date) - year(a.data.date) ||
+        a.data.order - b.data.order ||
+        b.data.date.getTime() - a.data.date.getTime(),
+    )
+    .map(async (entry) => ({
+      ...entry.data,
+      id: entry.id,
+      year: year(entry.data.date),
+      hasAbstract: Boolean(entry.body?.trim()),
+      Abstract: (await render(entry)).Content,
+    })),
+);
+
+// Your name as it appears in author lists, shown brighter so it stands out.
+const me = 'Rahmani, A.';
+const splitAuthors = (authors: string) => authors.split(me);
+
+const sharedFirst = publications.some((paper) => paper.authors?.includes('†'));
+const profiles = site.links.filter((link) =>
+  ['Google Scholar', 'ORCID'].includes(link.label),
+);
+---
+
+<Base
+  bare
+  background={background}
+  heading="Publications"
+  intro="Papers, preprints and book chapters, newest first."
+  title="Publications"
+  description="Publications by Amir Rahmani: papers, preprints and book chapters."
+>
+  {
+    profiles.length > 0 && (
+      <ul slot="lead" class="mt-7 flex flex-wrap gap-2.5">
+        {profiles.map((link) => (
+          <li>
+            <a class="button" href={href(link.href)}>
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    publications.length > 0 ? (
+      <section class="panel p-6 sm:p-8">
+        <ul class="border-b border-rule">
+          {publications.map((paper, index) => {
+            const firstOfYear = index === 0 || publications[index - 1].year !== paper.year;
+            return (
+              <Entry
+                when={firstOfYear ? String(paper.year) : ''}
+                datetime={firstOfYear ? String(paper.year) : undefined}
+              >
+                <h2 class="max-w-[60ch] text-lg leading-snug font-medium">{paper.title}</h2>
+
+                {paper.authors && (
+                  <p class="mt-1.5 max-w-[65ch] text-muted">
+                    {splitAuthors(paper.authors).map((part, i) => (
+                      <>
+                        {i > 0 && <span class="font-medium text-ink">{me}</span>}
+                        {part}
+                      </>
+                    ))}
+                  </p>
+                )}
+
+                {(paper.venue || paper.status) && (
+                  <p class="mt-0.5 text-muted">
+                    {paper.status && `${paper.status}, `}
+                    {paper.venue && <em>{paper.venue}</em>}
+                  </p>
+                )}
+
+                {paper.projects.length > 0 && (
+                  <p class="mt-2 text-sm text-muted">
+                    Project:{' '}
+                    {paper.projects
+                      .map((id) => projectTitles.get(id))
+                      .filter(Boolean)
+                      .map((title, i) => (
+                        <>
+                          {i > 0 && '; '}
+                          <a href={href('/research/')}>{title}</a>
+                        </>
+                      ))}
+                  </p>
+                )}
+
+                {paper.hasAbstract && (
+                  <details class="group mt-3">
+                    <summary class="w-fit cursor-pointer text-sm text-muted hover:text-accent">
+                      <span class="group-open:hidden">Show abstract</span>
+                      <span class="hidden group-open:inline">Hide abstract</span>
+                    </summary>
+                    <div class="copy mt-3">
+                      <paper.Abstract />
+                    </div>
+                  </details>
+                )}
+
+                {(paper.pdf || paper.link) && (
+                  <p class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+                    {paper.link && (
+                      <a class="action" href={paper.link}>
+                        Read the paper
+                      </a>
+                    )}
+                    {paper.pdf && (
+                      <a class="action" href={href(paper.pdf)} download={!isExternal(paper.pdf)}>
+                        Download PDF
+                      </a>
+                    )}
+                  </p>
+                )}
+              </Entry>
+            );
+          })}
+        </ul>
+        {sharedFirst && (
+          <p class="mt-4 text-sm text-muted">† These authors contributed equally.</p>
+        )}
+      </section>
+    ) : (
+      <p class="text-muted">
+        Nothing here yet. Add a Markdown file with kind: publication to src/content/research/.
+      </p>
+    )
+  }
+</Base>

@@ -210,6 +210,7 @@ export const site = {
 export const nav = [
   { label: 'Home', href: '/' },
   { label: 'Research', href: '/research/' },
+  { label: 'Publications', href: '/publications/' },
   { label: 'News', href: '/news/' },
   { label: 'Books', href: '/books/' },
   { label: 'Media', href: '/media/' },

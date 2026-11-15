@@ -5,8 +5,8 @@ A small, fast personal site built with [Astro](https://astro.build) and
 build time; no JavaScript is shipped apart from Astro's tiny link prefetcher
 and the Spotify player.
 
-Pages: **Home** (bio, education, CV, links), **Research** (projects and
-publications with abstracts and PDFs), **News** (cards for conferences, public engagement and notes), **Books** (cover grid with
+Pages: **Home** (bio, education, CV, links), **Research** (projects),
+**Publications** (papers with abstracts and PDFs), **News** (cards for conferences, public engagement and notes), **Books** (cover grid with
 star ratings) and **Media** (Spotify playlist and latest Letterboxd ratings).
 
 ## Run it locally
@@ -148,6 +148,7 @@ rebuild stops, push any change or re-enable it from the Actions tab.
     ├── pages/
     │   ├── index.astro            Home
     │   ├── research.astro
+    │   ├── publications.astro
     │   ├── news.astro   
     │   ├── books.astro
     │   ├── media.astro
