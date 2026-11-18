@@ -15,8 +15,8 @@ export const site = {
 
   // Shown at the top of the home page. One string per paragraph.
   bio: [
-    'I am a physicist with interest in imaging individual molecules and quantum biology. I am currently a Postdoctoral Research Associate in the Laser Analytics Group at the University of Cambridge, a College Research Associate at Wolfson College, and a visiting researcher at the British Antarctic Survey.',
-    'My current work is on understanding the membrane of living cells at near-freezing and sub-zero temperatures. Before that, during my PhD in Physics at the University of Leeds, I worked on single-molecule flow cytometry and nanometre-precision focus stabilisation for super-resolution microscopy.',
+    'I am a physicist interested in single-molecule imaging and quantum biology. I am currently a Postdoctoral Research Associate in the Laser Analytics Group at the University of Cambridge and a College Research Associate at Wolfson College.',
+    'My current work focuses on understanding the membranes of living cells at near-freezing temperatures, using single-molecule techniques such as DNA-PAINT to visualise membrane-related processes in live cells. Previously, I worked on single-molecule flow cytometry of T cells and on nanometre-precision focus stabilisation for super-resolution microscopy, and I remain interested in single-molecule imaging of T cell membranes.',
   ],
 
   // Put your CV at public/cv.pdf and set this to '/cv.pdf' to show a
@@ -190,9 +190,14 @@ export const site = {
     },
   ],
 
+  // Shown on the home page under "Expertise".
   skills: [
+    'Single-molecule localisation microscopy (SMLM)',
+    'DNA-PAINT',
+    'sptPALM',
+    'Single-particle tracking (SPT)',
+    'Live-cell super-resolution imaging',
     'Optical microscopy and microscope development',
-    'Super-resolution microscopy and single-molecule tracking',
     'Immunostaining',
     'Python',
   ],
