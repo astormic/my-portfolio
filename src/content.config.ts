@@ -16,6 +16,9 @@ const research = defineCollection({
     period: z.string().optional(),
     // Projects: where the work is or was done.
     place: z.string().optional(),
+    // Projects: file name (without .md) of the main project this one belongs to.
+    // It is then shown underneath that project as a smaller sub-project card.
+    parent: z.string().optional(),
     // Publications: file names (without .md) of the projects this paper
     // belongs to. It is then listed under those projects as a related paper.
     projects: z.array(z.string()).default([]),
