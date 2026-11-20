@@ -16,7 +16,7 @@ export const site = {
   // Shown at the top of the home page. One string per paragraph.
   bio: [
     'I am a physicist interested in single-molecule imaging and quantum biology. I am currently a Postdoctoral Research Associate in the Laser Analytics Group at the University of Cambridge and a College Research Associate at Wolfson College.',
-    'My current work focuses on understanding the membranes of living cells at near-freezing temperatures, using single-molecule techniques such as DNA-PAINT to visualise membrane-related processes in live cells. Previously, I worked on single-molecule flow cytometry of T cells and on nanometre-precision focus stabilisation for super-resolution microscopy, and I remain interested in single-molecule imaging of T cell membranes.',
+    'My current work focuses on understanding the membranes of living cells at near-freezing temperatures, using single-particle tracking or single-molecule localisation microscopy techniques (such as DNA-PAINT) to visualise membrane-related processes in live cells. Previously, I worked on single-molecule flow cytometry of T cells and on nanometre-precision focus stabilisation for super-resolution microscopy, and I remain interested in single-molecule imaging of T cell membranes.',
   ],
 
   // Put your CV at public/cv.pdf and set this to '/cv.pdf' to show a
@@ -39,7 +39,7 @@ export const site = {
       years: 'Mar 2025 - Present',
       title: 'Postdoctoral Research Associate',
       place: 'University of Cambridge, Cambridge, UK',
-      note: '',
+      note: 'Supervisor: Prof. Clemens Kaminski',
     },
     {
       years: 'Oct 2025 - Present',
@@ -51,19 +51,19 @@ export const site = {
       years: 'Mar 2025 - Present',
       title: 'Visiting Researcher',
       place: 'British Antarctic Survey, Cambridge, UK',
-      note: '',
+      note: 'Supervisor: Prof. Melody Clark',
     },
     {
       years: 'Dec 2019 - May 2020',
       title: 'Visiting Researcher',
       place: 'ICFO, Barcelona, Spain',
-      note: '',
+      note: 'Supervisor: Dr. Stefan Wieser',
     },
     {
       years: 'Jul 2018 - Jul 2019',
       title: 'Student',
       place: 'Ries Lab, EMBL, Heidelberg, Germany',
-      note: '',
+      note: 'Supervisor: Prof. Jonas Ries',
     },
   ],
 
@@ -72,7 +72,7 @@ export const site = {
       years: 'Oct 2022 - Nov 2025',
       title: 'PhD, Physics',
       place: 'University of Leeds, Leeds, UK',
-      note: '',
+      note: 'Supervisor: Dr. Aleks Ponjavic',
     },
     {
       years: 'Sep 2021 - Sep 2022',
