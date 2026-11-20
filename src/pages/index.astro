@@ -10,8 +10,12 @@ import trackingImage from '../assets/particle-tracking.png';
 import tableImage from '../assets/optical-table.jpg';
 import logo from '../assets/logo.png';
 
-// Positions held now, shown beside the bio.
-const current = site.experience.filter((row) => row.years.endsWith('Present'));
+// Positions held now, shown beside the bio: current jobs from Experience,
+// plus any Service and leadership entry marked `currently: true`.
+const current = [
+  ...site.experience.filter((row) => row.years.endsWith('Present')),
+  ...site.service.filter((row) => 'currently' in row && row.currently),
+];
 
 // The three picture tiles under the bio. Each links to the Research page.
 // To change a picture, put the file in src/assets/ and import it above.

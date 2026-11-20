@@ -42,12 +42,6 @@ export const site = {
       note: 'Supervisor: Prof. Clemens Kaminski',
     },
     {
-      years: 'Oct 2025 - Present',
-      title: 'College Research Associate',
-      place: 'Wolfson College, University of Cambridge, Cambridge, UK',
-      note: '',
-    },
-    {
       years: 'Mar 2025 - Present',
       title: 'Visiting Researcher',
       place: 'British Antarctic Survey, Cambridge, UK',
@@ -116,6 +110,14 @@ export const site = {
       title: 'Co-chair',
       place: 'Gordon Research Seminar on Image Science',
       note: '',
+    },
+    {
+      years: 'Oct 2025 - Present',
+      title: 'College Research Associate',
+      place: 'Wolfson College, University of Cambridge, Cambridge, UK',
+      note: 'Mentoring PhD students at the college',
+      // Also listed in the "Currently" panel beside the bio.
+      currently: true,
     },
     {
       years: '2025 - Present',
