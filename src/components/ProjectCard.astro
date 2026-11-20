@@ -1,6 +1,6 @@
 ---
-// One project on the Research page. Main projects get a large square
-// thumbnail; sub-projects (those with `parent:` set) get a smaller one.
+// One project on the Research page. The thumbnail runs the full height of the
+// card; sub-projects (those with `parent:` set) get a narrower one.
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { href } from '../lib/url';
@@ -33,23 +33,29 @@ const meta = [sub ? `Sub-project${when ? ', ' + when : ''}` : when, place]
 
 <article
   class:list={[
-    'panel grid items-start gap-0',
+    'panel grid',
     sub ? 'sm:grid-cols-[9rem_1fr]' : 'sm:grid-cols-[15rem_1fr]',
   ]}
 >
-  {
-    image ? (
-      <Image
-        src={image}
-        alt=""
-        width={sub ? 360 : 600}
-        height={sub ? 360 : 600}
-        class="aspect-[16/9] w-full object-cover sm:aspect-square"
-      />
-    ) : (
-      <div class="hidden aspect-square w-full bg-white/5 sm:block" aria-hidden="true" />
-    )
-  }
+  <!-- The thumbnail fills the full height of the card, however long the text. -->
+  <div
+    class:list={[
+      'relative aspect-[16/9] w-full overflow-hidden bg-white/5 sm:aspect-auto',
+      sub ? 'sm:min-h-[9rem]' : 'sm:min-h-[15rem]',
+      !image && 'hidden sm:block',
+    ]}
+  >
+    {
+      image && (
+        <Image
+          src={image}
+          alt=""
+          width={sub ? 480 : 800}
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      )
+    }
+  </div>
 
   <div class:list={['min-w-0', sub ? 'p-5 sm:p-6' : 'p-6 sm:p-8']}>
     {meta && <p class="text-sm tracking-wide text-accent">{meta}</p>}
